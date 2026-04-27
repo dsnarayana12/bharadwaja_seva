@@ -1,0 +1,14 @@
+uploads = []
+outputs = []
+
+[[generated]]
+id = "nL6W3G9bdeDrHQ3dt3ypl"
+uri = "file://artifacts/bharadwaja-seva/public/images/hero-bg.png"
+type = "image"
+title = "Hero community service scene"
+
+[[generated]]
+id = "z-zvmEBGSBprgMXsNBvdw"
+uri = "file://artifacts/bharadwaja-seva/public/images/about-volunteers.png"
+type = "image"
+title = "About section volunteering"

@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/"
+title = "Bharadwaja Seva Sangham"
+version = "1.0.0"
+id = "artifacts/bharadwaja-seva"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 18779
+
+[services.development]
+run = "pnpm --filter @workspace/bharadwaja-seva run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/bharadwaja-seva", "run", "build" ]
+publicDir = "artifacts/bharadwaja-seva/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "18779"
+BASE_PATH = "/"
