@@ -418,7 +418,7 @@ export default function Home() {
       </main>
 
       {/* FOOTER */}
-      <footer className="bg-[#1a1a1a] text-white pt-16 pb-8 border-t-4 border-primary">
+      <footer className="bg-[#1c2e22] text-white pt-16 pb-8 border-t-4 border-secondary">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-3 gap-12 mb-12">
             <div>
