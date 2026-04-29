@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useLocation } from "wouter";
-import { Menu, X } from "lucide-react";
+import { Menu } from "lucide-react";
 import {
   Sheet,
   SheetContent,
@@ -76,18 +76,10 @@ export function MobileMenu({ onNavigateHome }: MobileMenuProps) {
         <SheetDescription className="sr-only">
           {t("nav.openMenu")}
         </SheetDescription>
-        <div className="flex items-center justify-between px-5 h-16 border-b border-white/10">
+        <div className="flex items-center px-5 h-16 border-b border-white/10">
           <span className="font-serif font-bold text-lg uppercase tracking-wide">
             {t("brand.name")}
           </span>
-          <button
-            type="button"
-            onClick={() => setOpen(false)}
-            aria-label={t("nav.closeMenu")}
-            className="inline-flex items-center justify-center h-9 w-9 rounded-md text-primary-foreground hover:bg-white/10"
-          >
-            <X className="h-5 w-5" aria-hidden="true" />
-          </button>
         </div>
         <nav className="flex-1 overflow-y-auto py-4">
           <ul className="flex flex-col">
