@@ -15,7 +15,7 @@ export function SiteHeader({ onNavigateHome }: SiteHeaderProps) {
   const goToGallery = () => {
     if (!onGallery) {
       setLocation("/gallery");
-      window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });
+      window.scrollTo({ top: 0, behavior: "auto" });
     }
   };
 

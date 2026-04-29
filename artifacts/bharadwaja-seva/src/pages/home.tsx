@@ -36,7 +36,7 @@ export default function Home() {
 
   const goToGallery = () => {
     setLocation('/gallery');
-    window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });
+    window.scrollTo({ top: 0, behavior: 'auto' });
   };
 
   return (

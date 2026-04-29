@@ -39,7 +39,7 @@ export default function Gallery() {
       requestAnimationFrame(() => {
         const el = document.getElementById(sectionId);
         if (el) el.scrollIntoView({ behavior: "smooth" });
-        else window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });
+        else window.scrollTo({ top: 0, behavior: "auto" });
       });
     });
   };
