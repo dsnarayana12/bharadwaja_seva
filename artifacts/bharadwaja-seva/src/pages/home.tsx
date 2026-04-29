@@ -1,65 +1,47 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { motion } from "framer-motion";
-import { 
-  HeartHandshake, 
-  GraduationCap, 
-  Stethoscope, 
-  Users, 
-  Building2, 
-  Baby, 
-  Leaf, 
+import { useLocation } from "wouter";
+import {
+  HeartHandshake,
+  GraduationCap,
+  Stethoscope,
+  Users,
+  Building2,
+  Baby,
+  Leaf,
   HandHeart,
   MapPin,
   Phone,
   Mail,
   User,
-  MessageCircle
+  ArrowRight,
 } from "lucide-react";
+import { SiteHeader } from "@/components/SiteHeader";
+import { SiteFooter } from "@/components/SiteFooter";
+import { WhatsAppFAB } from "@/components/WhatsAppFAB";
+import { recentPhotos } from "@/data/events";
 
 export default function Home() {
+  const [, setLocation] = useLocation();
+
   const scrollTo = (id: string) => {
     const el = document.getElementById(id);
     if (el) {
       el.scrollIntoView({ behavior: 'smooth' });
+    } else if (id === 'home') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
+  };
+
+  const goToGallery = () => {
+    setLocation('/gallery');
+    window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });
   };
 
   return (
     <div className="min-h-screen flex flex-col font-sans bg-background text-foreground">
-      {/* HEADER */}
-      <header className="sticky top-0 z-50 w-full shadow-md bg-primary text-primary-foreground border-b-4 border-accent">
-        <div className="container mx-auto px-4 h-20 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="bg-white p-1 rounded">
-              <img 
-                src="https://img1.wsimg.com/isteam/ip/210338f7-f5fb-4633-b166-d0068dd8981c/baradwaja%20logo.jpg/:/rs=h:200,cg:true,m/qt=q:95" 
-                alt="Bharadwaja Seva Sangham Logo" 
-                className="h-12 w-auto object-contain"
-              />
-            </div>
-            <div className="hidden md:block">
-              <h1 className="font-serif font-bold text-xl tracking-wide uppercase">Bharadwaja Seva Sangham</h1>
-              <p className="text-xs text-primary-foreground/80 font-medium tracking-wider">Serving Humanity</p>
-            </div>
-          </div>
-          
-          <nav className="hidden lg:flex items-center gap-6 font-semibold text-sm">
-            <button onClick={() => scrollTo('home')} className="hover:text-accent transition-colors uppercase tracking-wider">Home</button>
-            <button onClick={() => scrollTo('about')} className="hover:text-accent transition-colors uppercase tracking-wider">About Us</button>
-            <button onClick={() => scrollTo('services')} className="hover:text-accent transition-colors uppercase tracking-wider">What We Do</button>
-            <button onClick={() => scrollTo('principles')} className="hover:text-accent transition-colors uppercase tracking-wider">Values</button>
-            <button onClick={() => scrollTo('contact')} className="hover:text-accent transition-colors uppercase tracking-wider">Contact</button>
-          </nav>
-          
-          <Button 
-            onClick={() => scrollTo('donate')}
-            className="bg-accent text-accent-foreground hover:bg-accent/90 font-bold uppercase tracking-wider px-6 rounded-none shadow-sm"
-          >
-            Donate Now
-          </Button>
-        </div>
-      </header>
+      <SiteHeader onNavigateHome={scrollTo} />
 
       <main className="flex-1">
         {/* HERO */}
@@ -258,6 +240,62 @@ export default function Home() {
           </div>
         </section>
 
+        {/* GLIMPSES OF OUR SEVA */}
+        <section id="glimpses" className="py-20 bg-background">
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-12">
+              <h3 className="text-3xl font-serif font-bold uppercase tracking-wide inline-block relative pb-4">
+                <span className="text-foreground">Glimpses of </span>
+                <span className="text-primary">Our Seva</span>
+                <span className="absolute bottom-0 left-1/4 right-1/4 h-1 bg-secondary"></span>
+              </h3>
+              <p className="mt-6 text-lg text-muted-foreground max-w-2xl mx-auto">
+                Recent moments from our community service, scholarship distributions, Annadanam, and cultural programs across Kakinada.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-5xl mx-auto mb-10">
+              {recentPhotos.map((photo, i) => (
+                <motion.button
+                  key={photo.src}
+                  initial={{ opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: i * 0.08 }}
+                  onClick={goToGallery}
+                  className="group relative aspect-[4/3] bg-muted overflow-hidden shadow-md hover:shadow-2xl transition-all border-2 border-transparent hover:border-secondary"
+                  aria-label={`Open gallery — ${photo.eventTitle}`}
+                >
+                  <img
+                    src={photo.src}
+                    alt={photo.alt}
+                    loading="lazy"
+                    className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                  <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-3 text-left">
+                    <p className="text-[10px] uppercase tracking-widest text-accent font-bold">
+                      {photo.dateLabel}
+                    </p>
+                    <p className="text-white text-xs md:text-sm font-semibold leading-tight line-clamp-2">
+                      {photo.eventTitle}
+                    </p>
+                  </div>
+                </motion.button>
+              ))}
+            </div>
+
+            <div className="text-center">
+              <Button
+                onClick={goToGallery}
+                className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-none uppercase font-bold tracking-wider px-8 py-6 h-auto shadow-md"
+              >
+                View Full Gallery
+                <ArrowRight className="ml-2" size={18} />
+              </Button>
+            </div>
+          </div>
+        </section>
+
         {/* GUIDING PRINCIPLES */}
         <section id="principles" className="py-20 relative overflow-hidden">
           <div className="absolute inset-0 bg-primary opacity-5"></div>
@@ -417,61 +455,8 @@ export default function Home() {
         </section>
       </main>
 
-      {/* FOOTER */}
-      <footer className="bg-[#1c2e22] text-white pt-16 pb-8 border-t-4 border-secondary">
-        <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-3 gap-12 mb-12">
-            <div>
-              <div className="flex items-center gap-3 mb-6 bg-white p-2 inline-block rounded">
-                <img 
-                  src="https://img1.wsimg.com/isteam/ip/210338f7-f5fb-4633-b166-d0068dd8981c/baradwaja%20logo.jpg/:/rs=h:200,cg:true,m/qt=q:95" 
-                  alt="Logo" 
-                  className="h-10 w-auto"
-                />
-              </div>
-              <h4 className="text-xl font-serif font-bold mb-4 uppercase tracking-wider text-accent">Bharadwaja Seva Sangham</h4>
-              <p className="text-gray-400 mb-6">Serving Humanity with Compassion and Purpose. A charitable trust dedicated to the upliftment of society.</p>
-            </div>
-            
-            <div>
-              <h4 className="text-lg font-bold mb-6 uppercase tracking-wider border-b border-gray-700 pb-2">Quick Links</h4>
-              <ul className="space-y-3 text-gray-400">
-                <li><button onClick={() => scrollTo('home')} className="hover:text-accent transition-colors">Home</button></li>
-                <li><button onClick={() => scrollTo('about')} className="hover:text-accent transition-colors">About Us</button></li>
-                <li><button onClick={() => scrollTo('services')} className="hover:text-accent transition-colors">Our Initiatives</button></li>
-                <li><button onClick={() => scrollTo('donate')} className="hover:text-accent transition-colors">Donate / Contribute</button></li>
-                <li><button onClick={() => scrollTo('contact')} className="hover:text-accent transition-colors">Contact Information</button></li>
-              </ul>
-            </div>
-            
-            <div>
-              <h4 className="text-lg font-bold mb-6 uppercase tracking-wider border-b border-gray-700 pb-2">Our Mission</h4>
-              <ul className="space-y-2 text-gray-400 text-sm">
-                <li>• Equality and inclusiveness</li>
-                <li>• Service without profit motive</li>
-                <li>• Upliftment of the marginalized</li>
-                <li>• Promotion of education & health</li>
-              </ul>
-            </div>
-          </div>
-          
-          <div className="border-t border-gray-800 pt-8 text-center text-gray-500 text-sm flex flex-col md:flex-row justify-between items-center">
-            <p>© 2026 Bharadwaja Seva Sangham — All Rights Reserved.</p>
-            <p className="mt-2 md:mt-0">Kakinada, Andhra Pradesh, India</p>
-          </div>
-        </div>
-      </footer>
-
-      {/* FLOATING WHATSAPP BUTTON */}
-      <a 
-        href="https://wa.me/919848122294" 
-        target="_blank" 
-        rel="noopener noreferrer"
-        className="fixed bottom-6 right-6 z-50 bg-[#25D366] text-white p-4 rounded-full shadow-2xl hover:bg-[#128C7E] hover:scale-110 transition-all duration-300"
-        aria-label="Contact on WhatsApp"
-      >
-        <MessageCircle size={32} />
-      </a>
+      <SiteFooter onNavigateHome={scrollTo} onNavigateGallery={goToGallery} />
+      <WhatsAppFAB />
     </div>
   );
 }
