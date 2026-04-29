@@ -35,14 +35,8 @@ export default function Gallery() {
   };
 
   const navigateHome = (sectionId: string) => {
+    sessionStorage.setItem("bss-pending-scroll", sectionId || "home");
     setLocation("/");
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        const el = document.getElementById(sectionId);
-        if (el) el.scrollIntoView({ behavior: "smooth" });
-        else window.scrollTo({ top: 0, behavior: "auto" });
-      });
-    });
   };
 
   const navigateGallery = () => {

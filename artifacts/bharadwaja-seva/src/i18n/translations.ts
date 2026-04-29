@@ -134,6 +134,8 @@ export const translations = {
     "lightbox.dialog": "Photo viewer",
     "whatsapp.aria": "Contact on WhatsApp",
     "contact.mapTitle": "Office Location Map",
+    "nav.openMenu": "Open menu",
+    "nav.closeMenu": "Close menu",
   },
   te: {
     "brand.name": "భరద్వాజ సేవా సంఘం",
@@ -266,5 +268,7 @@ export const translations = {
     "lightbox.dialog": "ఫోటో వ్యూయర్",
     "whatsapp.aria": "వాట్సాప్‌లో సంప్రదించండి",
     "contact.mapTitle": "కార్యాలయ ప్రదేశ పటం",
+    "nav.openMenu": "మెనూ తెరువు",
+    "nav.closeMenu": "మెనూ మూసివేయండి",
   },
 } as const;

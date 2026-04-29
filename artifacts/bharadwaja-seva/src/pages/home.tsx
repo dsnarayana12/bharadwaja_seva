@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { motion } from "framer-motion";
@@ -49,9 +50,27 @@ const PRINCIPLE_KEYS: TranslationKey[] = [
   "principles.5",
 ];
 
+const PENDING_SCROLL_KEY = "bss-pending-scroll";
+
 export default function Home() {
   const [, setLocation] = useLocation();
   const { lang, t } = useLanguage();
+
+  useEffect(() => {
+    const target = sessionStorage.getItem(PENDING_SCROLL_KEY);
+    if (!target) return;
+    sessionStorage.removeItem(PENDING_SCROLL_KEY);
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        if (target === "home") {
+          window.scrollTo({ top: 0, behavior: "auto" });
+          return;
+        }
+        const el = document.getElementById(target);
+        if (el) el.scrollIntoView({ behavior: "auto" });
+      });
+    });
+  }, []);
 
   const scrollTo = (id: string) => {
     const el = document.getElementById(id);

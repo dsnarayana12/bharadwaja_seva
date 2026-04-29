@@ -1,6 +1,7 @@
 import { useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { LanguageToggle } from "@/components/LanguageToggle";
+import { MobileMenu } from "@/components/MobileMenu";
 import { useLanguage } from "@/i18n/LanguageProvider";
 
 const LOGO_SRC =
@@ -87,14 +88,15 @@ export function SiteHeader({ onNavigateHome }: SiteHeaderProps) {
           </button>
         </nav>
 
-        <div className="flex items-center gap-3 shrink-0">
+        <div className="flex items-center gap-2 sm:gap-3 shrink-0">
           <LanguageToggle />
           <Button
             onClick={() => onNavigateHome("donate")}
-            className="bg-accent text-accent-foreground hover:bg-accent/90 font-bold uppercase tracking-wider px-4 sm:px-6 rounded-none shadow-sm text-xs sm:text-sm"
+            className="hidden sm:inline-flex bg-accent text-accent-foreground hover:bg-accent/90 font-bold uppercase tracking-wider px-4 sm:px-6 rounded-none shadow-sm text-xs sm:text-sm"
           >
             {t("nav.donate")}
           </Button>
+          <MobileMenu onNavigateHome={onNavigateHome} />
         </div>
       </div>
     </header>
