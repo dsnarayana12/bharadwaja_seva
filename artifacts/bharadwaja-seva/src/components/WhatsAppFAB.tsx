@@ -3,13 +3,13 @@ import { MessageCircle } from "lucide-react";
 export function WhatsAppFAB() {
   return (
     <a
-      href="https://wa.me/917989735152"
+      href="https://wa.me/919848122294"
       target="_blank"
       rel="noopener noreferrer"
-      className="fixed bottom-6 right-6 z-40 bg-[#25D366] hover:bg-[#1ebd5b] text-white p-4 rounded-full shadow-lg transition-colors"
-      aria-label="Chat on WhatsApp"
+      className="fixed bottom-6 right-6 z-50 bg-[#25D366] text-white p-4 rounded-full shadow-2xl hover:bg-[#128C7E] hover:scale-110 transition-all duration-300"
+      aria-label="Contact on WhatsApp"
     >
-      <MessageCircle size={24} />
+      <MessageCircle size={32} />
     </a>
   );
 }
