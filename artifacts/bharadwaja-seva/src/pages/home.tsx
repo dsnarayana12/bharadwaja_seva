@@ -254,7 +254,7 @@ export default function Home() {
               </p>
             </div>
 
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-5xl mx-auto mb-10">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 max-w-5xl mx-auto mb-10">
               {recentPhotos.map((photo, i) => (
                 <motion.button
                   key={photo.src}

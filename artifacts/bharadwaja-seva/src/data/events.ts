@@ -105,7 +105,9 @@ export const events: EventGroup[] = [
   },
 ];
 
-export const allPhotos = events.flatMap((e) =>
+const eventsByDateDesc = [...events].sort((a, b) => b.date.localeCompare(a.date));
+
+export const allPhotos = eventsByDateDesc.flatMap((e) =>
   e.photos.map((p) => ({ ...p, eventId: e.id, eventTitle: e.title, dateLabel: e.dateLabel }))
 );
 
