@@ -1,15 +1,17 @@
 import { useState, useMemo } from "react";
 import { useLocation } from "wouter";
 import { motion } from "framer-motion";
-import { events } from "@/data/events";
+import { events, localized } from "@/data/events";
 import { Lightbox, type LightboxPhoto } from "@/components/Lightbox";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { WhatsAppFAB } from "@/components/WhatsAppFAB";
+import { useLanguage } from "@/i18n/LanguageProvider";
 
 export default function Gallery() {
   const [, setLocation] = useLocation();
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const { lang, t } = useLanguage();
 
   const lightboxPhotos: LightboxPhoto[] = useMemo(
     () =>
@@ -17,10 +19,10 @@ export default function Gallery() {
         event.photos.map((p) => ({
           src: p.src,
           alt: p.alt,
-          caption: `${event.title} • ${event.dateLabel}`,
+          caption: `${localized(event.title, lang)} • ${localized(event.dateLabel, lang)}`,
         }))
       ),
-    []
+    [lang]
   );
 
   const photoIndexFor = (eventId: string, photoIdx: number) => {
@@ -34,7 +36,6 @@ export default function Gallery() {
 
   const navigateHome = (sectionId: string) => {
     setLocation("/");
-    // Two rAFs: first lets the Home component commit, second lets layout settle.
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
         const el = document.getElementById(sectionId);
@@ -63,11 +64,10 @@ export default function Gallery() {
               transition={{ duration: 0.5 }}
             >
               <h2 className="font-serif text-3xl md:text-5xl font-bold mb-4 drop-shadow-md">
-                Glimpses of Our Seva
+                {t("gallery.hero.title")}
               </h2>
               <p className="text-base md:text-lg text-white/90 max-w-2xl mx-auto">
-                A visual record of the events, programs, and community service organized by
-                Bharadwaja Seva Sangham, Kakinada.
+                {t("gallery.hero.subtitle")}
               </p>
             </motion.div>
           </div>
@@ -87,15 +87,15 @@ export default function Gallery() {
                 <div className="mb-6 flex items-end justify-between flex-wrap gap-2 border-b-2 border-secondary/40 pb-3">
                   <div>
                     <p className="text-sm uppercase tracking-widest text-secondary font-bold mb-1">
-                      {event.dateLabel}
+                      {localized(event.dateLabel, lang)}
                     </p>
                     <h3 className="font-serif text-2xl md:text-3xl font-bold text-foreground">
-                      {event.title}
+                      {localized(event.title, lang)}
                     </h3>
                   </div>
                 </div>
                 <p className="text-muted-foreground leading-relaxed mb-6 max-w-3xl">
-                  {event.caption}
+                  {localized(event.caption, lang)}
                 </p>
                 <div
                   className={`grid gap-4 ${
@@ -109,7 +109,7 @@ export default function Gallery() {
                       key={photo.src}
                       onClick={() => setActiveIndex(photoIndexFor(event.id, idx))}
                       className="group relative aspect-[4/3] bg-muted overflow-hidden shadow-md hover:shadow-2xl transition-all duration-300 border-2 border-transparent hover:border-secondary"
-                      aria-label={`View ${photo.alt}`}
+                      aria-label={photo.alt}
                     >
                       <img
                         src={photo.src}
@@ -130,17 +130,16 @@ export default function Gallery() {
         <section className="py-16 bg-primary text-primary-foreground text-center">
           <div className="container mx-auto px-4">
             <h3 className="font-serif text-2xl md:text-3xl font-bold mb-4">
-              Want to Be Part of the Next Event?
+              {t("gallery.cta.title")}
             </h3>
             <p className="text-base md:text-lg text-white/90 max-w-2xl mx-auto mb-8">
-              Volunteer with us, contribute, or simply join our next Annadanam, scholarship,
-              or cultural program.
+              {t("gallery.cta.desc")}
             </p>
             <button
               onClick={() => navigateHome("contact")}
               className="bg-accent text-accent-foreground hover:bg-accent/90 font-bold uppercase tracking-wider px-8 py-3 rounded-none shadow-md transition-colors"
             >
-              Get Involved
+              {t("gallery.cta.button")}
             </button>
           </div>
         </section>

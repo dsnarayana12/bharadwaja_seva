@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useLanguage } from "@/i18n/LanguageProvider";
 
 export interface LightboxPhoto {
   src: string;
@@ -17,6 +18,7 @@ interface LightboxProps {
 }
 
 export function Lightbox({ photos, index, onClose, onNext, onPrev }: LightboxProps) {
+  const { t } = useLanguage();
   const closeBtnRef = useRef<HTMLButtonElement>(null);
   const previouslyFocusedRef = useRef<HTMLElement | null>(null);
 
@@ -68,7 +70,7 @@ export function Lightbox({ photos, index, onClose, onNext, onPrev }: LightboxPro
         onClick={onClose}
         role="dialog"
         aria-modal="true"
-        aria-label="Photo viewer"
+        aria-label={t("lightbox.dialog")}
       >
         <button
           ref={closeBtnRef}
@@ -77,7 +79,7 @@ export function Lightbox({ photos, index, onClose, onNext, onPrev }: LightboxPro
             onClose();
           }}
           className="absolute top-4 right-4 z-10 text-white hover:text-accent transition-colors p-2 rounded-full bg-black/50 hover:bg-black/70 focus:outline-none focus:ring-2 focus:ring-accent"
-          aria-label="Close"
+          aria-label={t("lightbox.close")}
         >
           <X size={28} />
         </button>
@@ -90,7 +92,7 @@ export function Lightbox({ photos, index, onClose, onNext, onPrev }: LightboxPro
                 onPrev();
               }}
               className="absolute left-2 md:left-6 z-10 text-white hover:text-accent transition-colors p-2 rounded-full bg-black/50 hover:bg-black/70"
-              aria-label="Previous photo"
+              aria-label={t("lightbox.prev")}
             >
               <ChevronLeft size={32} />
             </button>
@@ -100,7 +102,7 @@ export function Lightbox({ photos, index, onClose, onNext, onPrev }: LightboxPro
                 onNext();
               }}
               className="absolute right-2 md:right-6 z-10 text-white hover:text-accent transition-colors p-2 rounded-full bg-black/50 hover:bg-black/70"
-              aria-label="Next photo"
+              aria-label={t("lightbox.next")}
             >
               <ChevronRight size={32} />
             </button>

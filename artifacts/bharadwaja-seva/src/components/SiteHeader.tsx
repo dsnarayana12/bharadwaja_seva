@@ -1,5 +1,7 @@
 import { useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
+import { LanguageToggle } from "@/components/LanguageToggle";
+import { useLanguage } from "@/i18n/LanguageProvider";
 
 const LOGO_SRC =
   "https://img1.wsimg.com/isteam/ip/210338f7-f5fb-4633-b166-d0068dd8981c/baradwaja%20logo.jpg/:/rs=h:200,cg:true,m/qt=q:95";
@@ -10,6 +12,7 @@ interface SiteHeaderProps {
 
 export function SiteHeader({ onNavigateHome }: SiteHeaderProps) {
   const [location, setLocation] = useLocation();
+  const { t } = useLanguage();
   const onGallery = location === "/gallery";
 
   const goToGallery = () => {
@@ -21,24 +24,24 @@ export function SiteHeader({ onNavigateHome }: SiteHeaderProps) {
 
   return (
     <header className="sticky top-0 z-50 w-full shadow-md bg-primary text-primary-foreground border-b-4 border-accent">
-      <div className="container mx-auto px-4 h-20 flex items-center justify-between">
+      <div className="container mx-auto px-4 h-20 flex items-center justify-between gap-4">
         <button
           onClick={() => onNavigateHome("home")}
-          className="flex items-center gap-3 text-left"
+          className="flex items-center gap-3 text-left shrink-0"
         >
           <div className="bg-white p-1 rounded">
             <img
               src={LOGO_SRC}
-              alt="Bharadwaja Seva Sangham Logo"
+              alt={t("brand.name")}
               className="h-12 w-auto object-contain"
             />
           </div>
           <div className="hidden md:block">
             <h1 className="font-serif font-bold text-xl tracking-wide uppercase">
-              Bharadwaja Seva Sangham
+              {t("brand.name")}
             </h1>
             <p className="text-xs text-primary-foreground/80 font-medium tracking-wider">
-              Serving Humanity
+              {t("brand.tagline")}
             </p>
           </div>
         </button>
@@ -48,19 +51,19 @@ export function SiteHeader({ onNavigateHome }: SiteHeaderProps) {
             onClick={() => onNavigateHome("home")}
             className="hover:text-accent transition-colors uppercase tracking-wider"
           >
-            Home
+            {t("nav.home")}
           </button>
           <button
             onClick={() => onNavigateHome("about")}
             className="hover:text-accent transition-colors uppercase tracking-wider"
           >
-            About Us
+            {t("nav.about")}
           </button>
           <button
             onClick={() => onNavigateHome("services")}
             className="hover:text-accent transition-colors uppercase tracking-wider"
           >
-            What We Do
+            {t("nav.services")}
           </button>
           <button
             onClick={goToGallery}
@@ -68,28 +71,31 @@ export function SiteHeader({ onNavigateHome }: SiteHeaderProps) {
               onGallery ? "text-accent" : ""
             }`}
           >
-            Gallery
+            {t("nav.gallery")}
           </button>
           <button
             onClick={() => onNavigateHome("principles")}
             className="hover:text-accent transition-colors uppercase tracking-wider"
           >
-            Values
+            {t("nav.values")}
           </button>
           <button
             onClick={() => onNavigateHome("contact")}
             className="hover:text-accent transition-colors uppercase tracking-wider"
           >
-            Contact
+            {t("nav.contact")}
           </button>
         </nav>
 
-        <Button
-          onClick={() => onNavigateHome("donate")}
-          className="bg-accent text-accent-foreground hover:bg-accent/90 font-bold uppercase tracking-wider px-6 rounded-none shadow-sm"
-        >
-          Donate Now
-        </Button>
+        <div className="flex items-center gap-3 shrink-0">
+          <LanguageToggle />
+          <Button
+            onClick={() => onNavigateHome("donate")}
+            className="bg-accent text-accent-foreground hover:bg-accent/90 font-bold uppercase tracking-wider px-4 sm:px-6 rounded-none shadow-sm text-xs sm:text-sm"
+          >
+            {t("nav.donate")}
+          </Button>
+        </div>
       </div>
     </header>
   );

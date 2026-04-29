@@ -106,8 +106,8 @@
   --chart-4: 154 25% 14%;
   --chart-5: 154 12% 38%;
 
-  --app-font-sans: 'Open Sans', sans-serif;
-  --app-font-serif: 'Playfair Display', serif;
+  --app-font-sans: 'Open Sans', 'Noto Sans Telugu', sans-serif;
+  --app-font-serif: 'Playfair Display', 'Noto Serif Telugu', serif;
   --app-font-mono: Menlo, monospace;
   --radius: 0.3rem; 
   --shadow-2xs: 0px 2px 0px 0px rgba(0,0,0,0.05);
