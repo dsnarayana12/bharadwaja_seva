@@ -372,7 +372,7 @@ export default function Home() {
                   <p className="mb-6 opacity-90">{t("donate.volunteer.desc")}</p>
                   <Button
                     variant="outline"
-                    className="border-white text-primary hover:bg-white hover:text-primary rounded-none uppercase font-bold tracking-wider w-full"
+                    className="border-white bg-transparent text-white hover:bg-white hover:text-primary rounded-none uppercase font-bold tracking-wider w-full"
                     onClick={() => scrollTo("contact")}
                   >
                     {t("donate.volunteer.cta")}
