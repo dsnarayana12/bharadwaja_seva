@@ -65,6 +65,29 @@ export const events: EventGroup[] = [
     ],
   },
   {
+    id: "ugadi-puraskaralu-2025",
+    title: {
+      en: "Ugadi Puraskaralu 2025",
+      te: "ఉగాది పురస్కారాలు 2025",
+    },
+    date: "2025-03-30",
+    dateLabel: { en: "March 2025", te: "మార్చి 2025" },
+    caption: {
+      en: "Ugadi Puraskaralu 2025 awards ceremony on Sri Vishvavasu Nama Samvatsara Ugadi. Chief Guest: Pujyulu Brahmasri Chaganti Koteswara Rao garu, Andhra Pradesh's Advisor on Student Ethics, Spirituality and Welfare, alongside Sangham elders and dignitaries on stage.",
+      te: "శ్రీ విశ్వావసు నామ సంవత్సర ఉగాది శుభాకాంక్షలతో నిర్వహించిన ఉగాది పురస్కారాలు 2025 పురస్కార ప్రదానోత్సవం. ముఖ్య అతిథి: పూజ్యులు బ్రహ్మశ్రీ చాగంటి కోటేశ్వర రావు గారు, ఆంధ్రప్రదేశ్ విద్యార్థి నైతికత, ఆధ్యాత్మికత మరియు సంక్షేమ సలహాదారు, వేదికపై సంఘం పెద్దలు మరియు ప్రముఖులతో కలిసి.",
+    },
+    photos: [
+      {
+        src: `${BASE}/ugadi-puraskaralu-2025/photo-2.jpg`,
+        alt: "Ugadi Puraskaralu 2025 ceremony on stage with chief guest Brahmasri Chaganti Koteswara Rao garu and Sangham dignitaries",
+      },
+      {
+        src: `${BASE}/ugadi-puraskaralu-2025/photo-1.jpg`,
+        alt: "Ornate Telugu invitation card for the Ugadi Puraskaralu 2025 awards ceremony",
+      },
+    ],
+  },
+  {
     id: "scholarships-nov-2025",
     title: {
       en: "Scholarships for Engineering Students",
