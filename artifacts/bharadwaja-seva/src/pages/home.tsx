@@ -86,10 +86,10 @@ export default function Home() {
               transition={{ duration: 0.8 }}
               className="max-w-3xl mx-auto"
             >
-              <h2 className="font-serif text-4xl md:text-6xl font-bold text-white mb-6 leading-tight drop-shadow-lg">
+              <h2 className="font-serif text-2xl md:text-4xl font-bold text-white mb-4 leading-tight drop-shadow-lg">
                 Serving Humanity with Compassion and Purpose
               </h2>
-              <p className="text-xl text-white/90 mb-10 font-medium drop-shadow-md">
+              <p className="text-base md:text-lg text-white/90 mb-8 font-medium drop-shadow-md">
                 A charitable, non-profit organization based in Kakinada, Andhra Pradesh, dedicated to uplifting the underprivileged.
               </p>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
