@@ -85,6 +85,14 @@ export const translations = {
       "The dedicated team behind Bharadwaja Seva Sangham, guiding our mission of selfless service.",
     "committee.officeBearers": "Office Bearers",
     "committee.executiveBody": "Executive Body",
+    "committee.ourMembersBtn": "Our Members",
+    "members.hero.title": "Our Members",
+    "members.hero.subtitle":
+      "The wider family of dedicated volunteers and supporters who make our service possible.",
+    "members.empty.title": "Member list coming soon",
+    "members.empty.desc":
+      "We are currently compiling the full list of our members. Please check back shortly.",
+    "members.back": "Back to Home",
 
     "principles.title.a": "Our Guiding ",
     "principles.title.b": "Principles",
@@ -232,6 +240,14 @@ export const translations = {
       "నిస్వార్థ సేవ లక్ష్యంతో భరద్వాజ సేవా సంఘాన్ని నడిపిస్తున్న అంకిత బృందం.",
     "committee.officeBearers": "ప్రధాన పదాధికారులు",
     "committee.executiveBody": "కార్యవర్గం",
+    "committee.ourMembersBtn": "మా సభ్యులు",
+    "members.hero.title": "మా సభ్యులు",
+    "members.hero.subtitle":
+      "మా సేవను సాధ్యం చేస్తున్న అంకిత స్వచ్ఛంద సేవకులు మరియు మద్దతుదారుల విస్తృత కుటుంబం.",
+    "members.empty.title": "సభ్యుల జాబితా త్వరలో అందుబాటులో ఉంటుంది",
+    "members.empty.desc":
+      "మా సభ్యుల పూర్తి జాబితాను ప్రస్తుతం సిద్ధం చేస్తున్నాము. దయచేసి త్వరలో మళ్ళీ తనిఖీ చేయండి.",
+    "members.back": "ముఖ్య పేజీకి తిరిగి",
 
     "principles.title.a": "మా మార్గదర్శక ",
     "principles.title.b": "సూత్రాలు",
@@ -379,6 +395,14 @@ export const translations = {
       "भरद्वाज सेवा संघम के पीछे समर्पित टीम, जो हमारे निःस्वार्थ सेवा के मिशन का मार्गदर्शन करती है।",
     "committee.officeBearers": "मुख्य पदाधिकारी",
     "committee.executiveBody": "कार्यकारिणी",
+    "committee.ourMembersBtn": "हमारे सदस्य",
+    "members.hero.title": "हमारे सदस्य",
+    "members.hero.subtitle":
+      "हमारी सेवा को संभव बनाने वाले समर्पित स्वयंसेवकों और समर्थकों का व्यापक परिवार।",
+    "members.empty.title": "सदस्य सूची शीघ्र ही आ रही है",
+    "members.empty.desc":
+      "हम वर्तमान में अपने सदस्यों की पूरी सूची तैयार कर रहे हैं। कृपया शीघ्र ही दोबारा देखें।",
+    "members.back": "मुख्य पृष्ठ पर वापस जाएँ",
 
     "principles.title.a": "हमारे मार्गदर्शक ",
     "principles.title.b": "सिद्धांत",

@@ -500,6 +500,18 @@ export default function Home() {
                     <CommitteeCard key={m.name.en} member={m} lang={lang} index={i} />
                   ))}
                 </div>
+
+                <div className="mt-12 flex justify-center">
+                  <Button
+                    onClick={() => {
+                      window.scrollTo({ top: 0, behavior: "auto" });
+                      setLocation("/members");
+                    }}
+                    className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-none uppercase font-bold tracking-wider px-8 py-6 text-base shadow-md"
+                  >
+                    {t("committee.ourMembersBtn")}
+                  </Button>
+                </div>
               </div>
             </div>
           </div>

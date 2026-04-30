@@ -6,6 +6,7 @@ import { LanguageProvider } from "@/i18n/LanguageProvider";
 import NotFound from "@/pages/not-found";
 import Home from "@/pages/home";
 import Gallery from "@/pages/gallery";
+import Members from "@/pages/members";
 
 const queryClient = new QueryClient();
 
@@ -14,6 +15,7 @@ function Router() {
     <Switch>
       <Route path="/" component={Home} />
       <Route path="/gallery" component={Gallery} />
+      <Route path="/members" component={Members} />
       <Route component={NotFound} />
     </Switch>
   );
