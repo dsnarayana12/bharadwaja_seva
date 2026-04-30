@@ -26,6 +26,7 @@ import { recentPhotos, localized } from "@/data/events";
 import { mediaCoverage } from "@/data/media";
 import { officeBearers, executiveBody, type CommitteeMember } from "@/data/committee";
 import { Lightbox, type LightboxPhoto } from "@/components/Lightbox";
+import { useContributeDialog } from "@/components/ContributeDialog";
 import { useLanguage } from "@/i18n/LanguageProvider";
 import type { Language, TranslationKey } from "@/i18n/translations";
 import aboutShlokaImage from "@assets/WhatsApp_Image_2026-04-30_at_12.25.40_PM_1777533717040.jpeg";
@@ -107,6 +108,7 @@ const PENDING_SCROLL_KEY = "bss-pending-scroll";
 export default function Home() {
   const [, setLocation] = useLocation();
   const { lang, t } = useLanguage();
+  const { open: openContribute } = useContributeDialog();
   const [mediaIndex, setMediaIndex] = useState<number | null>(null);
 
   const mediaLightboxPhotos: LightboxPhoto[] = useMemo(
@@ -189,7 +191,7 @@ export default function Home() {
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                 <Button
                   size="lg"
-                  onClick={() => scrollTo("donate")}
+                  onClick={openContribute}
                   className="bg-primary text-white hover:bg-primary/90 text-lg px-8 py-6 h-auto font-bold uppercase tracking-wider rounded-none shadow-xl border-2 border-primary"
                 >
                   {t("hero.cta.contribute")}

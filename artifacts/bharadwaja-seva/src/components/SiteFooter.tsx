@@ -1,3 +1,4 @@
+import { useContributeDialog } from "@/components/ContributeDialog";
 import { useLanguage } from "@/i18n/LanguageProvider";
 
 const LOGO_SRC =
@@ -10,6 +11,7 @@ interface SiteFooterProps {
 
 export function SiteFooter({ onNavigateHome, onNavigateGallery }: SiteFooterProps) {
   const { t } = useLanguage();
+  const { open: openContribute } = useContributeDialog();
 
   return (
     <footer className="bg-[#1c2e22] text-white pt-16 pb-8 border-t-4 border-secondary">
@@ -67,7 +69,7 @@ export function SiteFooter({ onNavigateHome, onNavigateGallery }: SiteFooterProp
               </li>
               <li>
                 <button
-                  onClick={() => onNavigateHome("donate")}
+                  onClick={openContribute}
                   className="hover:text-accent transition-colors"
                 >
                   {t("footer.link.donate")}

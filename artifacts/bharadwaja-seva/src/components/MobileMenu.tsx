@@ -8,6 +8,7 @@ import {
   SheetTitle,
   SheetDescription,
 } from "@/components/ui/sheet";
+import { useContributeDialog } from "@/components/ContributeDialog";
 import { useLanguage } from "@/i18n/LanguageProvider";
 import type { TranslationKey } from "@/i18n/translations";
 
@@ -34,6 +35,7 @@ export function MobileMenu({ onNavigateHome }: MobileMenuProps) {
   const [open, setOpen] = useState(false);
   const [location, setLocation] = useLocation();
   const { t } = useLanguage();
+  const { open: openContribute } = useContributeDialog();
   const onGallery = location === "/gallery";
 
   const handleClick = (item: NavItem) => {
@@ -53,7 +55,7 @@ export function MobileMenu({ onNavigateHome }: MobileMenuProps) {
   const handleDonate = () => {
     setOpen(false);
     window.setTimeout(() => {
-      onNavigateHome("donate");
+      openContribute();
     }, 250);
   };
 

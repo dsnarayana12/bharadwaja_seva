@@ -2,6 +2,7 @@ import { useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { LanguageToggle } from "@/components/LanguageToggle";
 import { MobileMenu } from "@/components/MobileMenu";
+import { useContributeDialog } from "@/components/ContributeDialog";
 import { useLanguage } from "@/i18n/LanguageProvider";
 
 const LOGO_SRC =
@@ -14,6 +15,7 @@ interface SiteHeaderProps {
 export function SiteHeader({ onNavigateHome }: SiteHeaderProps) {
   const [location, setLocation] = useLocation();
   const { t } = useLanguage();
+  const { open: openContribute } = useContributeDialog();
   const onGallery = location === "/gallery";
 
   const goToGallery = () => {
@@ -98,7 +100,7 @@ export function SiteHeader({ onNavigateHome }: SiteHeaderProps) {
             </button>
           </nav>
           <Button
-            onClick={() => onNavigateHome("donate")}
+            onClick={openContribute}
             className="bg-accent text-accent-foreground hover:bg-accent/90 font-bold uppercase tracking-wider px-6 rounded-none shadow-sm text-sm"
           >
             {t("nav.donate")}

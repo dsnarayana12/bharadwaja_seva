@@ -157,6 +157,12 @@ export const translations = {
     "contact.mapTitle": "Office Location Map",
     "nav.openMenu": "Open menu",
     "nav.closeMenu": "Close menu",
+
+    "contribute.dialog.title": "Scan to Contribute",
+    "contribute.dialog.desc":
+      "Scan the QR code with any UPI app to contribute to Bharadwaja Seva Sangham.",
+    "contribute.dialog.imageAlt":
+      "Bharadwaja Seva Sangham UPI QR code, UPI ID bharadwajaswvasangham@iob",
   },
   te: {
     "brand.name": "భరద్వాజ సేవా సంఘం",
@@ -312,6 +318,12 @@ export const translations = {
     "contact.mapTitle": "కార్యాలయ ప్రదేశ పటం",
     "nav.openMenu": "మెనూ తెరువు",
     "nav.closeMenu": "మెనూ మూసివేయండి",
+
+    "contribute.dialog.title": "విరాళం కోసం స్కాన్ చేయండి",
+    "contribute.dialog.desc":
+      "భరద్వాజ సేవా సంఘానికి విరాళం అందించడానికి ఏదైనా UPI యాప్‌తో QR కోడ్‌ను స్కాన్ చేయండి.",
+    "contribute.dialog.imageAlt":
+      "భరద్వాజ సేవా సంఘం UPI QR కోడ్, UPI ID bharadwajaswvasangham@iob",
   },
   hi: {
     "brand.name": "भरद्वाज सेवा संघम",
@@ -467,5 +479,11 @@ export const translations = {
     "contact.mapTitle": "कार्यालय स्थान का नक्शा",
     "nav.openMenu": "मेनू खोलें",
     "nav.closeMenu": "मेनू बंद करें",
+
+    "contribute.dialog.title": "योगदान के लिए स्कैन करें",
+    "contribute.dialog.desc":
+      "भरद्वाज सेवा संघम में योगदान देने के लिए किसी भी UPI ऐप से QR कोड स्कैन करें।",
+    "contribute.dialog.imageAlt":
+      "भरद्वाज सेवा संघम UPI QR कोड, UPI ID bharadwajaswvasangham@iob",
   },
 } as const;
