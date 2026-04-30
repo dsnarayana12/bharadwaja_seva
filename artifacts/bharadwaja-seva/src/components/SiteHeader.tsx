@@ -25,23 +25,18 @@ export function SiteHeader({ onNavigateHome }: SiteHeaderProps) {
 
   return (
     <header className="sticky top-0 z-50 w-full shadow-md bg-primary text-primary-foreground border-b-4 border-accent">
-      {/* Top row: centered logo + brand */}
-      <div className="container mx-auto px-4 py-3 sm:py-4 relative">
-        <div className="absolute right-4 top-1/2 -translate-y-1/2 flex items-center gap-2 sm:gap-3">
-          <LanguageToggle />
-          <MobileMenu onNavigateHome={onNavigateHome} />
-        </div>
-
+      {/* Top row: centered logo + brand, with controls on the right */}
+      <div className="container mx-auto px-4 py-3 sm:py-4 flex items-center gap-3 sm:gap-4">
         <button
           onClick={() => onNavigateHome("home")}
-          className="mx-auto flex items-center justify-center gap-3 sm:gap-5 md:gap-6 text-left max-w-full"
+          className="flex-1 min-w-0 flex items-center justify-center gap-3 sm:gap-5 md:gap-6 text-left"
         >
           <div className="flex flex-col items-center shrink-0">
             <div className="bg-white p-1.5 sm:p-2 rounded">
               <img
                 src={LOGO_SRC}
                 alt={t("brand.name")}
-                className="h-16 sm:h-20 md:h-24 lg:h-28 w-auto object-contain"
+                className="h-14 sm:h-20 md:h-24 lg:h-28 w-auto object-contain"
               />
             </div>
             <p className="text-[10px] sm:text-xs text-accent font-semibold tracking-wider mt-1 uppercase whitespace-nowrap">
@@ -49,7 +44,7 @@ export function SiteHeader({ onNavigateHome }: SiteHeaderProps) {
             </p>
           </div>
           <div className="min-w-0">
-            <h1 className="font-serif font-bold text-lg sm:text-2xl md:text-3xl lg:text-4xl leading-tight tracking-wide uppercase">
+            <h1 className="font-serif font-bold text-base sm:text-xl md:text-2xl lg:text-4xl leading-tight tracking-wide uppercase">
               {t("brand.name")}
             </h1>
             <p className="hidden md:block text-sm md:text-base text-primary-foreground/80 font-medium tracking-wider mt-1">
@@ -57,6 +52,11 @@ export function SiteHeader({ onNavigateHome }: SiteHeaderProps) {
             </p>
           </div>
         </button>
+
+        <div className="shrink-0 flex items-center gap-2 sm:gap-3">
+          <LanguageToggle />
+          <MobileMenu onNavigateHome={onNavigateHome} />
+        </div>
       </div>
 
       {/* Bottom row: nav (lg+) + contribute button */}
