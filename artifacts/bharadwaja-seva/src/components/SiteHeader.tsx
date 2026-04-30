@@ -31,24 +31,19 @@ export function SiteHeader({ onNavigateHome }: SiteHeaderProps) {
           onClick={() => onNavigateHome("home")}
           className="flex-1 min-w-0 flex items-center justify-center gap-3 sm:gap-5 md:gap-6 text-left"
         >
-          <div className="flex flex-col items-center shrink-0">
-            <div className="bg-white p-1.5 sm:p-2 rounded">
-              <img
-                src={LOGO_SRC}
-                alt={t("brand.name")}
-                className="h-14 sm:h-20 md:h-24 lg:h-28 w-auto object-contain"
-              />
-            </div>
-            <p className="text-[10px] sm:text-xs text-accent font-semibold tracking-wider mt-1 uppercase whitespace-nowrap">
-              Regd.No.350/2024
-            </p>
+          <div className="bg-white p-1.5 sm:p-2 rounded shrink-0">
+            <img
+              src={LOGO_SRC}
+              alt={t("brand.name")}
+              className="h-14 sm:h-20 md:h-24 lg:h-28 w-auto object-contain"
+            />
           </div>
           <div className="min-w-0">
             <h1 className="font-serif font-bold text-base sm:text-xl md:text-2xl lg:text-4xl leading-tight tracking-wide uppercase">
               {t("brand.name")}
             </h1>
-            <p className="hidden md:block text-sm md:text-base text-primary-foreground/80 font-medium tracking-wider mt-1">
-              {t("brand.tagline")}
+            <p className="text-[10px] sm:text-xs md:text-sm text-accent font-semibold tracking-wider mt-1 uppercase">
+              Regd.No.350/2024
             </p>
           </div>
         </button>
