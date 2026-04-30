@@ -243,7 +243,7 @@ export default function Home() {
                     <span className="block text-foreground text-3xl underline underline-offset-8 decoration-primary decoration-2">
                       {t("about.title.a").trim()}
                     </span>
-                    <span className="block text-primary text-xl sm:text-2xl md:text-3xl whitespace-nowrap mt-3">
+                    <span className="block text-primary text-xl sm:text-2xl md:text-2xl lg:text-3xl mt-3">
                       {t("about.title.b")}
                     </span>
                   </h3>
