@@ -24,6 +24,7 @@ import { WhatsAppFAB } from "@/components/WhatsAppFAB";
 import { recentPhotos, localized } from "@/data/events";
 import { useLanguage } from "@/i18n/LanguageProvider";
 import type { TranslationKey } from "@/i18n/translations";
+import aboutShlokaImage from "@assets/WhatsApp_Image_2026-04-30_at_12.25.40_PM_1777533717040.jpeg";
 
 interface ServiceCard {
   titleKey: TranslationKey;
@@ -205,13 +206,9 @@ export default function Home() {
               >
                 <div className="absolute inset-0 bg-secondary transform translate-x-4 translate-y-4 -z-10"></div>
                 <img
-                  src="/images/about-volunteers.png"
+                  src={aboutShlokaImage}
                   alt={t("about.title.b")}
-                  className="w-full h-auto shadow-xl border-4 border-white"
-                  onError={(e) => {
-                    e.currentTarget.src =
-                      "https://images.unsplash.com/photo-1593113514676-5927c3cc7083?auto=format&fit=crop&q=80&w=800";
-                  }}
+                  className="w-full h-auto shadow-xl border-4 border-white bg-white"
                 />
               </motion.div>
             </div>
