@@ -3,9 +3,9 @@ import { Button } from "@/components/ui/button";
 import { LanguageToggle } from "@/components/LanguageToggle";
 import { MobileMenu } from "@/components/MobileMenu";
 import { useLanguage } from "@/i18n/LanguageProvider";
+import logoWithRegdNo from "@assets/image_1777538625547.png";
 
-const LOGO_SRC =
-  "https://img1.wsimg.com/isteam/ip/210338f7-f5fb-4633-b166-d0068dd8981c/baradwaja%20logo.jpg/:/rs=h:200,cg:true,m/qt=q:95";
+const LOGO_SRC = logoWithRegdNo;
 
 interface SiteHeaderProps {
   onNavigateHome: (sectionId: string) => void;
@@ -41,9 +41,6 @@ export function SiteHeader({ onNavigateHome }: SiteHeaderProps) {
             <h1 className="font-serif font-bold text-sm sm:text-xl md:text-2xl leading-tight tracking-wide uppercase">
               {t("brand.name")}
             </h1>
-            <p className="text-[10px] sm:text-xs text-accent font-semibold tracking-wider mt-0.5 uppercase">
-              Regd.No.350/2024
-            </p>
             <p className="hidden md:block text-sm text-primary-foreground/80 font-medium tracking-wider mt-1">
               {t("brand.tagline")}
             </p>
