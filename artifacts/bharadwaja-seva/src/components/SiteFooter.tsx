@@ -19,9 +19,12 @@ export function SiteFooter({ onNavigateHome, onNavigateGallery }: SiteFooterProp
             <div className="flex items-center gap-3 mb-6 bg-white p-2 inline-block rounded">
               <img src={LOGO_SRC} alt={t("brand.name")} className="h-10 w-auto" />
             </div>
-            <h4 className="text-xl font-serif font-bold mb-4 uppercase tracking-wider text-accent">
+            <h4 className="text-xl font-serif font-bold mb-2 uppercase tracking-wider text-accent">
               {t("brand.name")}
             </h4>
+            <p className="text-xs font-semibold tracking-wider uppercase text-accent/90 mb-4">
+              Regd.No.350/2024
+            </p>
             <p className="text-gray-400 mb-6">{t("footer.intro")}</p>
           </div>
 

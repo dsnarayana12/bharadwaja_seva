@@ -41,6 +41,9 @@ export function SiteHeader({ onNavigateHome }: SiteHeaderProps) {
             <h1 className="font-serif font-bold text-sm sm:text-xl md:text-2xl leading-tight tracking-wide uppercase">
               {t("brand.name")}
             </h1>
+            <p className="text-[10px] sm:text-xs text-accent font-semibold tracking-wider mt-0.5 uppercase">
+              Regd.No.350/2024
+            </p>
             <p className="hidden md:block text-sm text-primary-foreground/80 font-medium tracking-wider mt-1">
               {t("brand.tagline")}
             </p>
