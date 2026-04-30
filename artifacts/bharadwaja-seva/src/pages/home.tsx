@@ -554,10 +554,16 @@ export default function Home() {
                     <p className="text-muted-foreground mt-2">{t("donate.give.bankNote")}</p>
                   </div>
                   <Button
+                    asChild
                     className="bg-primary text-white hover:bg-primary/90 rounded-none uppercase font-bold tracking-wider w-full shadow-md"
-                    onClick={() => scrollTo("contact")}
                   >
-                    {t("donate.give.cta")}
+                    <a
+                      href={`${import.meta.env.BASE_URL}documents/80G-certificate.pdf`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {t("donate.give.cta")}
+                    </a>
                   </Button>
                 </CardContent>
               </Card>

@@ -115,7 +115,7 @@ export const translations = {
     "donate.give.bankTitle": "Direct Bank Transfer",
     "donate.give.bankNote":
       "Please contact us for bank details and tax exemption certificates under section 80G.",
-    "donate.give.cta": "Contact for Details",
+    "donate.give.cta": "View 80G Certificate",
 
     "contact.title.a": "Get In ",
     "contact.title.b": "Touch",
@@ -270,7 +270,7 @@ export const translations = {
     "donate.give.bankTitle": "నేరుగా బ్యాంకు బదిలీ",
     "donate.give.bankNote":
       "బ్యాంకు వివరాలు మరియు సెక్షన్ 80G కింద పన్ను మినహాయింపు పత్రాల కోసం దయచేసి మమ్మల్ని సంప్రదించండి.",
-    "donate.give.cta": "వివరాల కోసం సంప్రదించండి",
+    "donate.give.cta": "80G ధృవీకరణ పత్రం చూడండి",
 
     "contact.title.a": "మమ్మల్ని ",
     "contact.title.b": "సంప్రదించండి",
@@ -425,7 +425,7 @@ export const translations = {
     "donate.give.bankTitle": "सीधे बैंक हस्तांतरण",
     "donate.give.bankNote":
       "बैंक विवरण और धारा 80G के तहत कर छूट प्रमाणपत्रों के लिए कृपया हमसे संपर्क करें।",
-    "donate.give.cta": "विवरण के लिए संपर्क करें",
+    "donate.give.cta": "80G प्रमाणपत्र देखें",
 
     "contact.title.a": "संपर्क ",
     "contact.title.b": "करें",
