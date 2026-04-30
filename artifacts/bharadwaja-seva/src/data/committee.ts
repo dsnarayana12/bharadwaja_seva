@@ -30,10 +30,6 @@ export const executiveBody: CommitteeMember[] = [
     role: { en: "Joint Secretary", te: "సహాయ కార్యదర్శి", hi: "संयुक्त सचिव" },
   },
   {
-    name: { en: "Dantu Bhaskar Rao", te: "దంతు భాస్కర రావు", hi: "दंतु भास्कर राव" },
-    role: { en: "E.C. Member", te: "కార్యవర్గ సభ్యుడు", hi: "कार्यकारिणी सदस्य" },
-  },
-  {
     name: { en: "K.V.S. Sitaram", te: "కె.వి.ఎస్. సీతారాం", hi: "के.वी.एस. सीताराम" },
     role: { en: "E.C. Member", te: "కార్యవర్గ సభ్యుడు", hi: "कार्यकारिणी सदस्य" },
   },
@@ -43,6 +39,10 @@ export const executiveBody: CommitteeMember[] = [
   },
   {
     name: { en: "M. Venkata Sastry", te: "ఎం. వెంకట శాస్త్రి", hi: "एम. वेंकट शास्त्री" },
+    role: { en: "E.C. Member", te: "కార్యవర్గ సభ్యుడు", hi: "कार्यकारिणी सदस्य" },
+  },
+  {
+    name: { en: "Dantu Bhaskar Rao", te: "దంతు భాస్కర రావు", hi: "दंतु भास्कर राव" },
     role: { en: "E.C. Member", te: "కార్యవర్గ సభ్యుడు", hi: "कार्यकारिणी सदस्य" },
   },
 ];
