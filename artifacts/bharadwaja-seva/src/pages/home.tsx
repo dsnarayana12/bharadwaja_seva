@@ -237,8 +237,7 @@ export default function Home() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.6 }}
               >
-                <div className="mb-6 flex items-start gap-4">
-                  <div className="h-1 w-12 bg-primary mt-4 shrink-0"></div>
+                <div className="mb-6">
                   <h3 className="font-serif font-bold uppercase tracking-wide">
                     <span className="block text-primary text-2xl sm:text-3xl md:text-3xl lg:text-4xl">
                       {t("about.title.b")}
