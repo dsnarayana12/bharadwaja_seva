@@ -3,9 +3,9 @@ import { Button } from "@/components/ui/button";
 import { LanguageToggle } from "@/components/LanguageToggle";
 import { MobileMenu } from "@/components/MobileMenu";
 import { useLanguage } from "@/i18n/LanguageProvider";
-import logoWithRegdNo from "@assets/image_1777538625547.png";
 
-const LOGO_SRC = logoWithRegdNo;
+const LOGO_SRC =
+  "https://img1.wsimg.com/isteam/ip/210338f7-f5fb-4633-b166-d0068dd8981c/baradwaja%20logo.jpg/:/rs=h:200,cg:true,m/qt=q:95";
 
 interface SiteHeaderProps {
   onNavigateHome: (sectionId: string) => void;
@@ -30,12 +30,17 @@ export function SiteHeader({ onNavigateHome }: SiteHeaderProps) {
           onClick={() => onNavigateHome("home")}
           className="flex items-center gap-3 sm:gap-4 text-left min-w-0"
         >
-          <div className="bg-white p-1.5 rounded shrink-0">
-            <img
-              src={LOGO_SRC}
-              alt={t("brand.name")}
-              className="h-14 sm:h-16 md:h-20 w-auto object-contain"
-            />
+          <div className="flex flex-col items-center shrink-0">
+            <div className="bg-white p-1.5 rounded">
+              <img
+                src={LOGO_SRC}
+                alt={t("brand.name")}
+                className="h-14 sm:h-16 md:h-20 w-auto object-contain"
+              />
+            </div>
+            <p className="text-[10px] sm:text-xs text-accent font-semibold tracking-wider mt-1 uppercase whitespace-nowrap">
+              Regd.No.350/2024
+            </p>
           </div>
           <div className="min-w-0">
             <h1 className="font-serif font-bold text-sm sm:text-xl md:text-2xl leading-tight tracking-wide uppercase">
