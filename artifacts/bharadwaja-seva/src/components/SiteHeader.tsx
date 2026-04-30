@@ -25,17 +25,23 @@ export function SiteHeader({ onNavigateHome }: SiteHeaderProps) {
 
   return (
     <header className="sticky top-0 z-50 w-full shadow-md bg-primary text-primary-foreground border-b-4 border-accent">
-      <div className="container mx-auto px-4 min-h-24 py-2 flex items-center justify-between gap-4">
+      {/* Top row: centered logo + brand */}
+      <div className="container mx-auto px-4 py-3 sm:py-4 relative">
+        <div className="absolute right-4 top-1/2 -translate-y-1/2 flex items-center gap-2 sm:gap-3">
+          <LanguageToggle />
+          <MobileMenu onNavigateHome={onNavigateHome} />
+        </div>
+
         <button
           onClick={() => onNavigateHome("home")}
-          className="flex items-center gap-3 sm:gap-4 text-left min-w-0"
+          className="mx-auto flex items-center justify-center gap-3 sm:gap-5 md:gap-6 text-left max-w-full"
         >
           <div className="flex flex-col items-center shrink-0">
-            <div className="bg-white p-1.5 rounded">
+            <div className="bg-white p-1.5 sm:p-2 rounded">
               <img
                 src={LOGO_SRC}
                 alt={t("brand.name")}
-                className="h-14 sm:h-16 md:h-20 w-auto object-contain"
+                className="h-16 sm:h-20 md:h-24 lg:h-28 w-auto object-contain"
               />
             </div>
             <p className="text-[10px] sm:text-xs text-accent font-semibold tracking-wider mt-1 uppercase whitespace-nowrap">
@@ -43,65 +49,65 @@ export function SiteHeader({ onNavigateHome }: SiteHeaderProps) {
             </p>
           </div>
           <div className="min-w-0">
-            <h1 className="font-serif font-bold text-sm sm:text-xl md:text-2xl leading-tight tracking-wide uppercase">
+            <h1 className="font-serif font-bold text-lg sm:text-2xl md:text-3xl lg:text-4xl leading-tight tracking-wide uppercase">
               {t("brand.name")}
             </h1>
-            <p className="hidden md:block text-sm text-primary-foreground/80 font-medium tracking-wider mt-1">
+            <p className="hidden md:block text-sm md:text-base text-primary-foreground/80 font-medium tracking-wider mt-1">
               {t("brand.tagline")}
             </p>
           </div>
         </button>
+      </div>
 
-        <nav className="hidden lg:flex items-center gap-6 font-semibold text-sm">
-          <button
-            onClick={() => onNavigateHome("home")}
-            className="hover:text-accent transition-colors uppercase tracking-wider"
-          >
-            {t("nav.home")}
-          </button>
-          <button
-            onClick={() => onNavigateHome("about")}
-            className="hover:text-accent transition-colors uppercase tracking-wider"
-          >
-            {t("nav.about")}
-          </button>
-          <button
-            onClick={() => onNavigateHome("services")}
-            className="hover:text-accent transition-colors uppercase tracking-wider"
-          >
-            {t("nav.services")}
-          </button>
-          <button
-            onClick={goToGallery}
-            className={`hover:text-accent transition-colors uppercase tracking-wider ${
-              onGallery ? "text-accent" : ""
-            }`}
-          >
-            {t("nav.gallery")}
-          </button>
-          <button
-            onClick={() => onNavigateHome("principles")}
-            className="hover:text-accent transition-colors uppercase tracking-wider"
-          >
-            {t("nav.values")}
-          </button>
-          <button
-            onClick={() => onNavigateHome("contact")}
-            className="hover:text-accent transition-colors uppercase tracking-wider"
-          >
-            {t("nav.contact")}
-          </button>
-        </nav>
-
-        <div className="flex items-center gap-2 sm:gap-3 shrink-0">
-          <LanguageToggle />
+      {/* Bottom row: nav (lg+) + contribute button */}
+      <div className="hidden lg:block border-t border-white/10 bg-primary/95">
+        <div className="container mx-auto px-4 py-3 flex items-center justify-center gap-6">
+          <nav className="flex items-center gap-6 font-semibold text-sm">
+            <button
+              onClick={() => onNavigateHome("home")}
+              className="hover:text-accent transition-colors uppercase tracking-wider"
+            >
+              {t("nav.home")}
+            </button>
+            <button
+              onClick={() => onNavigateHome("about")}
+              className="hover:text-accent transition-colors uppercase tracking-wider"
+            >
+              {t("nav.about")}
+            </button>
+            <button
+              onClick={() => onNavigateHome("services")}
+              className="hover:text-accent transition-colors uppercase tracking-wider"
+            >
+              {t("nav.services")}
+            </button>
+            <button
+              onClick={goToGallery}
+              className={`hover:text-accent transition-colors uppercase tracking-wider ${
+                onGallery ? "text-accent" : ""
+              }`}
+            >
+              {t("nav.gallery")}
+            </button>
+            <button
+              onClick={() => onNavigateHome("principles")}
+              className="hover:text-accent transition-colors uppercase tracking-wider"
+            >
+              {t("nav.values")}
+            </button>
+            <button
+              onClick={() => onNavigateHome("contact")}
+              className="hover:text-accent transition-colors uppercase tracking-wider"
+            >
+              {t("nav.contact")}
+            </button>
+          </nav>
           <Button
             onClick={() => onNavigateHome("donate")}
-            className="hidden sm:inline-flex bg-accent text-accent-foreground hover:bg-accent/90 font-bold uppercase tracking-wider px-4 sm:px-6 rounded-none shadow-sm text-xs sm:text-sm"
+            className="bg-accent text-accent-foreground hover:bg-accent/90 font-bold uppercase tracking-wider px-6 rounded-none shadow-sm text-sm"
           >
             {t("nav.donate")}
           </Button>
-          <MobileMenu onNavigateHome={onNavigateHome} />
         </div>
       </div>
     </header>
