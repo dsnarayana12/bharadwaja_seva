@@ -239,7 +239,7 @@ export default function Home() {
               >
                 <div className="mb-6">
                   <h3 className="font-serif font-bold uppercase tracking-wide">
-                    <span className="block text-primary text-2xl sm:text-3xl md:text-3xl lg:text-4xl">
+                    <span className="block text-primary text-2xl sm:text-3xl md:text-3xl lg:text-4xl underline underline-offset-8 decoration-accent decoration-2">
                       {t("about.title.b")}
                     </span>
                   </h3>
