@@ -238,12 +238,9 @@ export default function Home() {
                 transition={{ duration: 0.6 }}
               >
                 <div className="mb-6 flex items-start gap-4">
-                  <div className="h-1 w-12 bg-primary mt-5 shrink-0"></div>
+                  <div className="h-1 w-12 bg-primary mt-4 shrink-0"></div>
                   <h3 className="font-serif font-bold uppercase tracking-wide">
-                    <span className="block text-foreground text-3xl underline underline-offset-8 decoration-primary decoration-2">
-                      {t("about.title.a").trim()}
-                    </span>
-                    <span className="block text-primary text-xl sm:text-2xl md:text-2xl lg:text-3xl mt-3">
+                    <span className="block text-primary text-2xl sm:text-3xl md:text-3xl lg:text-4xl">
                       {t("about.title.b")}
                     </span>
                   </h3>
