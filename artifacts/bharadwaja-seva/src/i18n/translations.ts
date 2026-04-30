@@ -34,7 +34,6 @@ export const translations = {
       "Based in Kakinada, Andhra Pradesh, Bharadwaja Seva Sangham is a charitable, non-profit organization with a deep-rooted commitment to social welfare. We believe that true spirituality is expressed through selfless service to humanity.",
     "about.p2":
       "For years, our organization has been dedicated to uplifting the underprivileged through comprehensive initiatives in education, healthcare, social welfare, and cultural enrichment. We operate without a profit motive, driven solely by the desire to bring light and hope into the lives of the marginalized.",
-    "about.cta": "Read Our Guiding Principles",
 
     "services.title.a": "What We ",
     "services.title.b": "Do",
@@ -78,6 +77,13 @@ export const translations = {
     "media.intro":
       "Press articles and news features about our work in the community. Click any clipping to read it in full.",
     "media.openAria": "Open media coverage article",
+
+    "committee.title.a": "Committee ",
+    "committee.title.b": "Members",
+    "committee.intro":
+      "The dedicated team behind Bharadwaja Seva Sangham, guiding our mission of selfless service.",
+    "committee.officeBearers": "Office Bearers",
+    "committee.executiveBody": "Executive Body",
 
     "principles.title.a": "Our Guiding ",
     "principles.title.b": "Principles",
@@ -174,7 +180,6 @@ export const translations = {
       "ఆంధ్రప్రదేశ్‌లోని కాకినాడ కేంద్రంగా ఉన్న భరద్వాజ సేవా సంఘం, సామాజిక సంక్షేమం పట్ల లోతైన నిబద్ధత కలిగిన లాభాపేక్ష లేని ధార్మిక సంస్థ. నిజమైన ఆధ్యాత్మికత నిస్వార్థ మానవ సేవ ద్వారానే ప్రకటితమవుతుందని మేము విశ్వసిస్తాము.",
     "about.p2":
       "విద్య, వైద్యం, సామాజిక సంక్షేమం మరియు సాంస్కృతిక వికాసం వంటి విస్తృత కార్యక్రమాల ద్వారా నిరుపేదల అభ్యున్నతి కోసం మా సంస్థ చాలా ఏళ్లుగా అంకితభావంతో పనిచేస్తోంది. లాభాపేక్ష లేకుండా, వెనుకబడిన వర్గాల జీవితాలలో వెలుగు మరియు ఆశలు నింపాలనే లక్ష్యంతో మాత్రమే మేము పని చేస్తున్నాము.",
-    "about.cta": "మా మార్గదర్శక సూత్రాలు చదవండి",
 
     "services.title.a": "మా ",
     "services.title.b": "సేవలు",
@@ -218,6 +223,13 @@ export const translations = {
     "media.intro":
       "మా సేవా కార్యక్రమాల గురించి ప్రచురితమైన వార్తలు మరియు ప్రత్యేక కథనాలు. పూర్తిగా చదవడానికి ఏదైనా కథనంపై క్లిక్ చేయండి.",
     "media.openAria": "మీడియా కథనం తెరవండి",
+
+    "committee.title.a": "కమిటీ ",
+    "committee.title.b": "సభ్యులు",
+    "committee.intro":
+      "నిస్వార్థ సేవ లక్ష్యంతో భరద్వాజ సేవా సంఘాన్ని నడిపిస్తున్న అంకిత బృందం.",
+    "committee.officeBearers": "ప్రధాన పదాధికారులు",
+    "committee.executiveBody": "కార్యవర్గం",
 
     "principles.title.a": "మా మార్గదర్శక ",
     "principles.title.b": "సూత్రాలు",

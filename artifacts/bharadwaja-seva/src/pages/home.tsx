@@ -16,6 +16,7 @@ import {
   Phone,
   Mail,
   User,
+  Crown,
   ArrowRight,
 } from "lucide-react";
 import { SiteHeader } from "@/components/SiteHeader";
@@ -23,6 +24,7 @@ import { SiteFooter } from "@/components/SiteFooter";
 import { WhatsAppFAB } from "@/components/WhatsAppFAB";
 import { recentPhotos, localized } from "@/data/events";
 import { mediaCoverage } from "@/data/media";
+import { officeBearers, executiveBody, type CommitteeMember } from "@/data/committee";
 import { Lightbox, type LightboxPhoto } from "@/components/Lightbox";
 import { useLanguage } from "@/i18n/LanguageProvider";
 import type { TranslationKey } from "@/i18n/translations";
@@ -32,6 +34,53 @@ interface ServiceCard {
   titleKey: TranslationKey;
   descKey: TranslationKey;
   icon: typeof HandHeart;
+}
+
+function CommitteeCard({
+  member,
+  lang,
+  index,
+  featured = false,
+}: {
+  member: CommitteeMember;
+  lang: "en" | "te";
+  index: number;
+  featured?: boolean;
+}) {
+  const Icon = featured ? Crown : User;
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 16 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.4, delay: index * 0.06 }}
+      className={`group bg-white shadow-md hover:shadow-xl transition-all border-l-4 ${
+        featured ? "border-secondary" : "border-primary"
+      } p-5 flex items-start gap-4`}
+    >
+      <div
+        className={`shrink-0 w-12 h-12 rounded-full flex items-center justify-center ${
+          featured
+            ? "bg-secondary/10 text-secondary"
+            : "bg-primary/10 text-primary"
+        }`}
+      >
+        <Icon size={22} />
+      </div>
+      <div className="min-w-0 flex-1">
+        <p className="font-serif font-bold text-base md:text-lg text-foreground leading-tight">
+          {member.name[lang]}
+        </p>
+        <p
+          className={`mt-1 text-xs md:text-sm uppercase tracking-wider font-bold ${
+            featured ? "text-secondary" : "text-primary"
+          }`}
+        >
+          {member.role[lang]}
+        </p>
+      </div>
+    </motion.div>
+  );
 }
 
 const SERVICES: ServiceCard[] = [
@@ -205,13 +254,6 @@ export default function Home() {
                 <p className="text-lg text-muted-foreground leading-relaxed mb-8">
                   {t("about.p2")}
                 </p>
-                <Button
-                  onClick={() => scrollTo("principles")}
-                  variant="outline"
-                  className="border-primary text-primary hover:bg-primary hover:text-white rounded-none uppercase font-bold tracking-wider"
-                >
-                  {t("about.cta")}
-                </Button>
               </motion.div>
 
               <motion.div
@@ -415,6 +457,54 @@ export default function Home() {
                   </motion.li>
                 ))}
               </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* COMMITTEE MEMBERS */}
+        <section id="committee" className="py-20 bg-muted border-t border-b border-border">
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-14">
+              <h3 className="text-3xl md:text-4xl font-serif font-bold uppercase tracking-wide inline-block relative pb-4">
+                <span className="text-foreground">{t("committee.title.a")}</span>
+                <span className="text-primary">{t("committee.title.b")}</span>
+                <span className="absolute bottom-0 left-1/4 right-1/4 h-1 bg-primary"></span>
+              </h3>
+              <p className="mt-6 text-lg text-muted-foreground max-w-2xl mx-auto">
+                {t("committee.intro")}
+              </p>
+            </div>
+
+            <div className="max-w-5xl mx-auto space-y-12">
+              <div>
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="h-px flex-1 bg-border"></div>
+                  <h4 className="text-sm md:text-base font-bold uppercase tracking-[0.2em] text-secondary">
+                    {t("committee.officeBearers")}
+                  </h4>
+                  <div className="h-px flex-1 bg-border"></div>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                  {officeBearers.map((m, i) => (
+                    <CommitteeCard key={m.name.en} member={m} lang={lang} index={i} featured />
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="h-px flex-1 bg-border"></div>
+                  <h4 className="text-sm md:text-base font-bold uppercase tracking-[0.2em] text-secondary">
+                    {t("committee.executiveBody")}
+                  </h4>
+                  <div className="h-px flex-1 bg-border"></div>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                  {executiveBody.map((m, i) => (
+                    <CommitteeCard key={m.name.en} member={m} lang={lang} index={i} />
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         </section>
