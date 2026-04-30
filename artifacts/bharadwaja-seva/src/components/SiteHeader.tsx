@@ -25,23 +25,23 @@ export function SiteHeader({ onNavigateHome }: SiteHeaderProps) {
 
   return (
     <header className="sticky top-0 z-50 w-full shadow-md bg-primary text-primary-foreground border-b-4 border-accent">
-      <div className="container mx-auto px-4 h-20 flex items-center justify-between gap-4">
+      <div className="container mx-auto px-4 min-h-24 py-2 flex items-center justify-between gap-4">
         <button
           onClick={() => onNavigateHome("home")}
-          className="flex items-center gap-2 sm:gap-3 text-left min-w-0"
+          className="flex items-center gap-3 sm:gap-4 text-left min-w-0"
         >
-          <div className="bg-white p-1 rounded shrink-0">
+          <div className="bg-white p-1.5 rounded shrink-0">
             <img
               src={LOGO_SRC}
               alt={t("brand.name")}
-              className="h-10 sm:h-12 w-auto object-contain"
+              className="h-14 sm:h-16 md:h-20 w-auto object-contain"
             />
           </div>
           <div className="min-w-0">
-            <h1 className="font-serif font-bold text-[11px] sm:text-base md:text-xl leading-tight tracking-wide uppercase">
+            <h1 className="font-serif font-bold text-sm sm:text-xl md:text-2xl leading-tight tracking-wide uppercase">
               {t("brand.name")}
             </h1>
-            <p className="hidden md:block text-xs text-primary-foreground/80 font-medium tracking-wider">
+            <p className="hidden md:block text-sm text-primary-foreground/80 font-medium tracking-wider mt-1">
               {t("brand.tagline")}
             </p>
           </div>
