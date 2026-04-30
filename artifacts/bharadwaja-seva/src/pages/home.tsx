@@ -27,7 +27,7 @@ import { mediaCoverage } from "@/data/media";
 import { officeBearers, executiveBody, type CommitteeMember } from "@/data/committee";
 import { Lightbox, type LightboxPhoto } from "@/components/Lightbox";
 import { useLanguage } from "@/i18n/LanguageProvider";
-import type { TranslationKey } from "@/i18n/translations";
+import type { Language, TranslationKey } from "@/i18n/translations";
 import aboutShlokaImage from "@assets/WhatsApp_Image_2026-04-30_at_12.25.40_PM_1777533717040.jpeg";
 
 interface ServiceCard {
@@ -43,7 +43,7 @@ function CommitteeCard({
   featured = false,
 }: {
   member: CommitteeMember;
-  lang: "en" | "te";
+  lang: Language;
   index: number;
   featured?: boolean;
 }) {
