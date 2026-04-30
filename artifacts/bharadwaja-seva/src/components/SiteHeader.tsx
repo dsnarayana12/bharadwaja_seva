@@ -24,7 +24,7 @@ export function SiteHeader({ onNavigateHome }: SiteHeaderProps) {
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full shadow-md bg-primary text-primary-foreground border-b-4 border-accent">
+    <header className="relative w-full shadow-md bg-primary text-primary-foreground border-b-4 border-accent">
       {/* Top row: centered logo + brand, with controls on the right */}
       <div className="container mx-auto px-4 py-3 sm:py-4 flex items-center gap-3 sm:gap-4">
         <button
