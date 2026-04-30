@@ -175,11 +175,15 @@ export default function Home() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.6 }}
               >
-                <div className="mb-6 flex items-center gap-4">
-                  <div className="h-1 w-12 bg-primary"></div>
-                  <h3 className="text-3xl font-serif font-bold uppercase tracking-wide">
-                    <span className="text-foreground">{t("about.title.a")}</span>
-                    <span className="text-primary">{t("about.title.b")}</span>
+                <div className="mb-6 flex items-start gap-4">
+                  <div className="h-1 w-12 bg-primary mt-5 shrink-0"></div>
+                  <h3 className="font-serif font-bold uppercase tracking-wide">
+                    <span className="block text-foreground text-3xl underline underline-offset-8 decoration-primary decoration-2">
+                      {t("about.title.a").trim()}
+                    </span>
+                    <span className="block text-primary text-xl sm:text-2xl md:text-3xl whitespace-nowrap mt-3">
+                      {t("about.title.b")}
+                    </span>
                   </h3>
                 </div>
                 <p className="text-lg text-muted-foreground leading-relaxed mb-6">
