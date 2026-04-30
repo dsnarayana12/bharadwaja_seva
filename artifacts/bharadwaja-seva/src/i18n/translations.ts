@@ -73,6 +73,12 @@ export const translations = {
     "glimpses.viewFull": "View Full Gallery",
     "glimpses.openAria": "Open gallery",
 
+    "media.title.a": "Media ",
+    "media.title.b": "Coverage",
+    "media.intro":
+      "Press articles and news features about our work in the community. Click any clipping to read it in full.",
+    "media.openAria": "Open media coverage article",
+
     "principles.title.a": "Our Guiding ",
     "principles.title.b": "Principles",
     "principles.1": "Equality and inclusiveness across all communities",
@@ -206,6 +212,12 @@ export const translations = {
       "కాకినాడ అంతటా మా సామాజిక సేవ, ఉపకార వేతనాల పంపిణీ, అన్నదానం మరియు సాంస్కృతిక కార్యక్రమాల ఇటీవలి ఘట్టాలు.",
     "glimpses.viewFull": "పూర్తి చిత్రమాలిక చూడండి",
     "glimpses.openAria": "చిత్రమాలిక తెరవండి",
+
+    "media.title.a": "మీడియా ",
+    "media.title.b": "ప్రసారం",
+    "media.intro":
+      "మా సేవా కార్యక్రమాల గురించి ప్రచురితమైన వార్తలు మరియు ప్రత్యేక కథనాలు. పూర్తిగా చదవడానికి ఏదైనా కథనంపై క్లిక్ చేయండి.",
+    "media.openAria": "మీడియా కథనం తెరవండి",
 
     "principles.title.a": "మా మార్గదర్శక ",
     "principles.title.b": "సూత్రాలు",

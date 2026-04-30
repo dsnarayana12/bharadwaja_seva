@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { motion } from "framer-motion";
@@ -22,6 +22,8 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { WhatsAppFAB } from "@/components/WhatsAppFAB";
 import { recentPhotos, localized } from "@/data/events";
+import { mediaCoverage } from "@/data/media";
+import { Lightbox, type LightboxPhoto } from "@/components/Lightbox";
 import { useLanguage } from "@/i18n/LanguageProvider";
 import type { TranslationKey } from "@/i18n/translations";
 import aboutShlokaImage from "@assets/WhatsApp_Image_2026-04-30_at_12.25.40_PM_1777533717040.jpeg";
@@ -56,6 +58,17 @@ const PENDING_SCROLL_KEY = "bss-pending-scroll";
 export default function Home() {
   const [, setLocation] = useLocation();
   const { lang, t } = useLanguage();
+  const [mediaIndex, setMediaIndex] = useState<number | null>(null);
+
+  const mediaLightboxPhotos: LightboxPhoto[] = useMemo(
+    () =>
+      mediaCoverage.map((m) => ({
+        src: m.src,
+        alt: m.title[lang],
+        caption: `${m.title[lang]} • ${m.source[lang]} • ${m.dateLabel[lang]}`,
+      })),
+    [lang],
+  );
 
   useEffect(() => {
     const target = sessionStorage.getItem(PENDING_SCROLL_KEY);
@@ -321,6 +334,57 @@ export default function Home() {
           </div>
         </section>
 
+        {/* MEDIA COVERAGE */}
+        <section id="media" className="py-20 bg-muted border-t border-b border-border">
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-12">
+              <h3 className="text-3xl font-serif font-bold uppercase tracking-wide inline-block relative pb-4">
+                <span className="text-foreground">{t("media.title.a")}</span>
+                <span className="text-primary">{t("media.title.b")}</span>
+                <span className="absolute bottom-0 left-1/4 right-1/4 h-1 bg-primary"></span>
+              </h3>
+              <p className="mt-6 text-lg text-muted-foreground max-w-2xl mx-auto">
+                {t("media.intro")}
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
+              {mediaCoverage.map((item, i) => (
+                <motion.button
+                  key={item.id}
+                  initial={{ opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: i * 0.08 }}
+                  onClick={() => setMediaIndex(i)}
+                  className="group flex flex-col bg-white shadow-md hover:shadow-2xl transition-all border-2 border-transparent hover:border-secondary text-left"
+                  aria-label={`${t("media.openAria")} — ${item.title[lang]}`}
+                >
+                  <div className="relative aspect-[3/4] overflow-hidden bg-muted">
+                    <img
+                      src={item.src}
+                      alt={item.title[lang]}
+                      loading="lazy"
+                      className="absolute inset-0 w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
+                    />
+                  </div>
+                  <div className="p-4 border-t-4 border-accent">
+                    <p className="text-[10px] uppercase tracking-widest text-secondary font-bold mb-1">
+                      {item.dateLabel[lang]}
+                    </p>
+                    <h4 className="font-serif font-bold text-base text-foreground leading-snug mb-2 line-clamp-2">
+                      {item.title[lang]}
+                    </h4>
+                    <p className="text-xs text-muted-foreground italic">
+                      {item.source[lang]}
+                    </p>
+                  </div>
+                </motion.button>
+              ))}
+            </div>
+          </div>
+        </section>
+
         {/* GUIDING PRINCIPLES */}
         <section id="principles" className="py-20 relative overflow-hidden">
           <div className="absolute inset-0 bg-primary opacity-5"></div>
@@ -483,6 +547,27 @@ export default function Home() {
 
       <SiteFooter onNavigateHome={scrollTo} onNavigateGallery={goToGallery} />
       <WhatsAppFAB />
+
+      {mediaIndex !== null && (
+        <Lightbox
+          photos={mediaLightboxPhotos}
+          index={mediaIndex}
+          onClose={() => setMediaIndex(null)}
+          onNext={() =>
+            setMediaIndex((i) =>
+              i === null ? null : (i + 1) % mediaLightboxPhotos.length,
+            )
+          }
+          onPrev={() =>
+            setMediaIndex((i) =>
+              i === null
+                ? null
+                : (i - 1 + mediaLightboxPhotos.length) %
+                  mediaLightboxPhotos.length,
+            )
+          }
+        />
+      )}
     </div>
   );
 }
