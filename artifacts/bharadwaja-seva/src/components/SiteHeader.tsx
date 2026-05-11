@@ -25,21 +25,20 @@ export function SiteHeader({ onNavigateHome }: SiteHeaderProps) {
 
   return (
     <header className="relative w-full shadow-md bg-primary text-primary-foreground border-b-4 border-accent">
-      {/* Top row: centered logo + brand, with controls on the right */}
       <div className="container mx-auto px-4 py-2 sm:py-3 lg:py-0 flex items-center gap-3 sm:gap-4">
         <button
           onClick={() => onNavigateHome("home")}
-          className="flex-1 min-w-0 flex items-center justify-center lg:justify-start gap-3 sm:gap-5 md:gap-6 text-left"
+          className="min-w-0 flex items-center justify-center lg:justify-start gap-3 sm:gap-5 md:gap-6 lg:gap-4 text-left flex-1 lg:flex-none"
         >
           <div className="shrink-0 lg:py-2">
             <img
               src={LOGO_SRC}
               alt={t("brand.name")}
-              className="h-16 sm:h-20 md:h-24 lg:h-44 xl:h-52 w-auto object-contain"
+              className="h-16 sm:h-20 md:h-24 lg:h-28 xl:h-36 2xl:h-44 w-auto object-contain"
             />
           </div>
           <div className="min-w-0">
-            <h1 className="font-serif font-bold text-base sm:text-xl md:text-2xl lg:text-4xl xl:text-5xl leading-tight tracking-wide uppercase lg:whitespace-nowrap">
+            <h1 className="font-serif font-bold text-base sm:text-xl md:text-2xl lg:text-2xl xl:text-3xl 2xl:text-4xl leading-tight tracking-wide uppercase lg:whitespace-nowrap">
               {t("brand.name")}
             </h1>
             <p className="text-[10px] sm:text-xs md:text-sm lg:text-base text-accent font-semibold tracking-wider mt-1 uppercase">
@@ -48,16 +47,9 @@ export function SiteHeader({ onNavigateHome }: SiteHeaderProps) {
           </div>
         </button>
 
-        <div className="shrink-0 flex items-center gap-2 sm:gap-3">
-          <LanguageToggle />
-          <MobileMenu onNavigateHome={onNavigateHome} />
-        </div>
-      </div>
-
-      {/* Bottom row: nav (lg+) + contribute button */}
-      <div className="hidden lg:block bg-primary/95">
-        <div className="container mx-auto px-4 py-3 flex items-center justify-center gap-6">
-          <nav className="flex items-center gap-6 font-semibold text-sm">
+        {/* Desktop nav + contribute (lg+), placed inline to the right of the brand */}
+        <div className="hidden lg:flex flex-1 items-center justify-end gap-4 xl:gap-6">
+          <nav className="flex items-center gap-3 xl:gap-5 font-semibold text-xs xl:text-sm whitespace-nowrap">
             <button
               onClick={() => onNavigateHome("home")}
               className="hover:text-accent transition-colors uppercase tracking-wider"
@@ -103,6 +95,11 @@ export function SiteHeader({ onNavigateHome }: SiteHeaderProps) {
           >
             {t("nav.donate")}
           </Button>
+        </div>
+
+        <div className="shrink-0 flex items-center gap-2 sm:gap-3">
+          <LanguageToggle />
+          <MobileMenu onNavigateHome={onNavigateHome} />
         </div>
       </div>
     </header>
