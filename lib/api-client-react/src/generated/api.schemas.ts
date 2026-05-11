@@ -8,3 +8,117 @@
 export interface HealthStatus {
   status: string;
 }
+
+export interface ErrorEnvelope {
+  error: string;
+}
+
+export interface AdminLoginInput {
+  /** @minLength 1 */
+  username: string;
+  /** @minLength 1 */
+  password: string;
+}
+
+export interface AdminUser {
+  username: string;
+}
+
+export interface GalleryEvent {
+  id: number;
+  titleEn: string;
+  titleTe: string;
+  titleHi: string;
+  descriptionEn: string;
+  descriptionTe: string;
+  descriptionHi: string;
+  eventDate: string;
+  category: string;
+  photoUrls: string[];
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface GalleryEventInput {
+  /** @minLength 1 */
+  titleEn: string;
+  titleTe?: string;
+  titleHi?: string;
+  descriptionEn?: string;
+  descriptionTe?: string;
+  descriptionHi?: string;
+  /** @minLength 1 */
+  eventDate: string;
+  /** @minLength 1 */
+  category: string;
+  photoUrls: string[];
+}
+
+export interface GalleryEventUpdate {
+  /** @minLength 1 */
+  titleEn?: string;
+  titleTe?: string;
+  titleHi?: string;
+  descriptionEn?: string;
+  descriptionTe?: string;
+  descriptionHi?: string;
+  eventDate?: string;
+  category?: string;
+  photoUrls?: string[];
+}
+
+export interface CommitteeMember {
+  id: number;
+  nameEn: string;
+  nameTe: string;
+  nameHi: string;
+  roleEn: string;
+  roleTe: string;
+  roleHi: string;
+  groupKey: string;
+  sortOrder: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface CommitteeMemberInput {
+  /** @minLength 1 */
+  nameEn: string;
+  nameTe?: string;
+  nameHi?: string;
+  /** @minLength 1 */
+  roleEn: string;
+  roleTe?: string;
+  roleHi?: string;
+  /** @minLength 1 */
+  groupKey: string;
+  sortOrder?: number;
+}
+
+export interface CommitteeMemberUpdate {
+  /** @minLength 1 */
+  nameEn?: string;
+  nameTe?: string;
+  nameHi?: string;
+  /** @minLength 1 */
+  roleEn?: string;
+  roleTe?: string;
+  roleHi?: string;
+  groupKey?: string;
+  sortOrder?: number;
+}
+
+export interface UploadUrlRequest {
+  /** @minLength 1 */
+  name: string;
+  /** @minimum 1 */
+  size: number;
+  /** @minLength 1 */
+  contentType: string;
+}
+
+export interface UploadUrlResponse {
+  uploadURL: string;
+  objectPath: string;
+  metadata?: UploadUrlRequest;
+}

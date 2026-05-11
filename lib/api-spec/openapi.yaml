@@ -10,6 +10,14 @@ servers:
 tags:
   - name: health
     description: Health operations
+  - name: Storage
+    description: Object storage upload and serving endpoints.
+  - name: Admin
+    description: Admin authentication and session management.
+  - name: Events
+    description: Gallery events.
+  - name: Committee
+    description: Committee members.
 paths:
   /healthz:
     get:
@@ -24,13 +32,483 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+  /admin/login:
+    post:
+      operationId: adminLogin
+      tags: [Admin]
+      summary: Admin login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AdminLoginInput"
+      responses:
+        "200":
+          description: Logged in
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminUser"
+        "401":
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorEnvelope"
+  /admin/logout:
+    post:
+      operationId: adminLogout
+      tags: [Admin]
+      summary: Admin logout
+      responses:
+        "204":
+          description: Logged out
+  /admin/me:
+    get:
+      operationId: adminMe
+      tags: [Admin]
+      summary: Get current admin session
+      responses:
+        "200":
+          description: Current admin
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminUser"
+        "401":
+          description: Not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorEnvelope"
+  /events:
+    get:
+      operationId: listEvents
+      tags: [Events]
+      summary: List all gallery events
+      responses:
+        "200":
+          description: All events
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/GalleryEvent"
+    post:
+      operationId: createEvent
+      tags: [Events]
+      summary: Create a gallery event (admin only)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GalleryEventInput"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GalleryEvent"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorEnvelope"
+  /events/{id}:
+    patch:
+      operationId: updateEvent
+      tags: [Events]
+      summary: Update a gallery event (admin only)
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GalleryEventUpdate"
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GalleryEvent"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorEnvelope"
+    delete:
+      operationId: deleteEvent
+      tags: [Events]
+      summary: Delete a gallery event (admin only)
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Deleted
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorEnvelope"
+  /committee-members:
+    get:
+      operationId: listCommitteeMembers
+      tags: [Committee]
+      summary: List all committee members
+      responses:
+        "200":
+          description: All members
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/CommitteeMember"
+    post:
+      operationId: createCommitteeMember
+      tags: [Committee]
+      summary: Add a committee member (admin only)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CommitteeMemberInput"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CommitteeMember"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorEnvelope"
+  /committee-members/{id}:
+    patch:
+      operationId: updateCommitteeMember
+      tags: [Committee]
+      summary: Update a committee member (admin only)
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CommitteeMemberUpdate"
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CommitteeMember"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorEnvelope"
+    delete:
+      operationId: deleteCommitteeMember
+      tags: [Committee]
+      summary: Delete a committee member (admin only)
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Deleted
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorEnvelope"
+  /storage/uploads/request-url:
+    post:
+      tags: [Storage]
+      operationId: requestUploadUrl
+      summary: Request a presigned URL for file upload
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UploadUrlRequest"
+      responses:
+        "200":
+          description: Presigned upload URL generated.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UploadUrlResponse"
+        "400":
+          description: Missing or invalid required fields.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorEnvelope"
+        "500":
+          description: Failed to generate upload URL.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorEnvelope"
 components:
   schemas:
     HealthStatus:
       type: object
+      required: [status]
       properties:
         status:
           type: string
+    ErrorEnvelope:
+      type: object
+      required: [error]
+      properties:
+        error:
+          type: string
+    AdminLoginInput:
+      type: object
+      required: [username, password]
+      properties:
+        username:
+          type: string
+          minLength: 1
+        password:
+          type: string
+          minLength: 1
+    AdminUser:
+      type: object
+      required: [username]
+      properties:
+        username:
+          type: string
+    GalleryEvent:
+      type: object
       required:
-        - status
-
+        - id
+        - titleEn
+        - titleTe
+        - titleHi
+        - descriptionEn
+        - descriptionTe
+        - descriptionHi
+        - eventDate
+        - category
+        - photoUrls
+        - createdAt
+        - updatedAt
+      properties:
+        id:
+          type: integer
+        titleEn:
+          type: string
+        titleTe:
+          type: string
+        titleHi:
+          type: string
+        descriptionEn:
+          type: string
+        descriptionTe:
+          type: string
+        descriptionHi:
+          type: string
+        eventDate:
+          type: string
+        category:
+          type: string
+        photoUrls:
+          type: array
+          items:
+            type: string
+        createdAt:
+          type: string
+        updatedAt:
+          type: string
+    GalleryEventInput:
+      type: object
+      required: [titleEn, eventDate, category, photoUrls]
+      properties:
+        titleEn:
+          type: string
+          minLength: 1
+        titleTe:
+          type: string
+        titleHi:
+          type: string
+        descriptionEn:
+          type: string
+        descriptionTe:
+          type: string
+        descriptionHi:
+          type: string
+        eventDate:
+          type: string
+          minLength: 1
+        category:
+          type: string
+          minLength: 1
+        photoUrls:
+          type: array
+          items:
+            type: string
+    GalleryEventUpdate:
+      type: object
+      properties:
+        titleEn:
+          type: string
+          minLength: 1
+        titleTe:
+          type: string
+        titleHi:
+          type: string
+        descriptionEn:
+          type: string
+        descriptionTe:
+          type: string
+        descriptionHi:
+          type: string
+        eventDate:
+          type: string
+        category:
+          type: string
+        photoUrls:
+          type: array
+          items:
+            type: string
+    CommitteeMember:
+      type: object
+      required:
+        - id
+        - nameEn
+        - nameTe
+        - nameHi
+        - roleEn
+        - roleTe
+        - roleHi
+        - groupKey
+        - sortOrder
+        - createdAt
+        - updatedAt
+      properties:
+        id:
+          type: integer
+        nameEn:
+          type: string
+        nameTe:
+          type: string
+        nameHi:
+          type: string
+        roleEn:
+          type: string
+        roleTe:
+          type: string
+        roleHi:
+          type: string
+        groupKey:
+          type: string
+        sortOrder:
+          type: integer
+        createdAt:
+          type: string
+        updatedAt:
+          type: string
+    CommitteeMemberInput:
+      type: object
+      required: [nameEn, roleEn, groupKey]
+      properties:
+        nameEn:
+          type: string
+          minLength: 1
+        nameTe:
+          type: string
+        nameHi:
+          type: string
+        roleEn:
+          type: string
+          minLength: 1
+        roleTe:
+          type: string
+        roleHi:
+          type: string
+        groupKey:
+          type: string
+          minLength: 1
+        sortOrder:
+          type: integer
+    CommitteeMemberUpdate:
+      type: object
+      properties:
+        nameEn:
+          type: string
+          minLength: 1
+        nameTe:
+          type: string
+        nameHi:
+          type: string
+        roleEn:
+          type: string
+          minLength: 1
+        roleTe:
+          type: string
+        roleHi:
+          type: string
+        groupKey:
+          type: string
+        sortOrder:
+          type: integer
+    UploadUrlRequest:
+      type: object
+      required: [name, size, contentType]
+      properties:
+        name:
+          type: string
+          minLength: 1
+        size:
+          type: integer
+          minimum: 1
+        contentType:
+          type: string
+          minLength: 1
+    UploadUrlResponse:
+      type: object
+      required: [uploadURL, objectPath]
+      properties:
+        uploadURL:
+          type: string
+          format: uri
+        objectPath:
+          type: string
+        metadata:
+          $ref: "#/components/schemas/UploadUrlRequest"

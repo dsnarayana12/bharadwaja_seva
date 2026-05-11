@@ -6,4 +6,15 @@
  * OpenAPI spec version: 0.1.0
  */
 
+export * from "./adminLoginInput";
+export * from "./adminUser";
+export * from "./committeeMember";
+export * from "./committeeMemberInput";
+export * from "./committeeMemberUpdate";
+export * from "./errorEnvelope";
+export * from "./galleryEvent";
+export * from "./galleryEventInput";
+export * from "./galleryEventUpdate";
 export * from "./healthStatus";
+export * from "./uploadUrlRequest";
+export * from "./uploadUrlResponse";

@@ -14,3 +14,195 @@ import * as zod from "zod";
 export const HealthCheckResponse = zod.object({
   status: zod.string(),
 });
+
+/**
+ * @summary Admin login
+ */
+
+export const AdminLoginBody = zod.object({
+  username: zod.string().min(1),
+  password: zod.string().min(1),
+});
+
+export const AdminLoginResponse = zod.object({
+  username: zod.string(),
+});
+
+/**
+ * @summary Get current admin session
+ */
+export const AdminMeResponse = zod.object({
+  username: zod.string(),
+});
+
+/**
+ * @summary List all gallery events
+ */
+export const ListEventsResponseItem = zod.object({
+  id: zod.number(),
+  titleEn: zod.string(),
+  titleTe: zod.string(),
+  titleHi: zod.string(),
+  descriptionEn: zod.string(),
+  descriptionTe: zod.string(),
+  descriptionHi: zod.string(),
+  eventDate: zod.string(),
+  category: zod.string(),
+  photoUrls: zod.array(zod.string()),
+  createdAt: zod.string(),
+  updatedAt: zod.string(),
+});
+export const ListEventsResponse = zod.array(ListEventsResponseItem);
+
+/**
+ * @summary Create a gallery event (admin only)
+ */
+
+export const CreateEventBody = zod.object({
+  titleEn: zod.string().min(1),
+  titleTe: zod.string().optional(),
+  titleHi: zod.string().optional(),
+  descriptionEn: zod.string().optional(),
+  descriptionTe: zod.string().optional(),
+  descriptionHi: zod.string().optional(),
+  eventDate: zod.string().min(1),
+  category: zod.string().min(1),
+  photoUrls: zod.array(zod.string()),
+});
+
+/**
+ * @summary Update a gallery event (admin only)
+ */
+export const UpdateEventParams = zod.object({
+  id: zod.coerce.number(),
+});
+
+export const UpdateEventBody = zod.object({
+  titleEn: zod.string().min(1).optional(),
+  titleTe: zod.string().optional(),
+  titleHi: zod.string().optional(),
+  descriptionEn: zod.string().optional(),
+  descriptionTe: zod.string().optional(),
+  descriptionHi: zod.string().optional(),
+  eventDate: zod.string().optional(),
+  category: zod.string().optional(),
+  photoUrls: zod.array(zod.string()).optional(),
+});
+
+export const UpdateEventResponse = zod.object({
+  id: zod.number(),
+  titleEn: zod.string(),
+  titleTe: zod.string(),
+  titleHi: zod.string(),
+  descriptionEn: zod.string(),
+  descriptionTe: zod.string(),
+  descriptionHi: zod.string(),
+  eventDate: zod.string(),
+  category: zod.string(),
+  photoUrls: zod.array(zod.string()),
+  createdAt: zod.string(),
+  updatedAt: zod.string(),
+});
+
+/**
+ * @summary Delete a gallery event (admin only)
+ */
+export const DeleteEventParams = zod.object({
+  id: zod.coerce.number(),
+});
+
+/**
+ * @summary List all committee members
+ */
+export const ListCommitteeMembersResponseItem = zod.object({
+  id: zod.number(),
+  nameEn: zod.string(),
+  nameTe: zod.string(),
+  nameHi: zod.string(),
+  roleEn: zod.string(),
+  roleTe: zod.string(),
+  roleHi: zod.string(),
+  groupKey: zod.string(),
+  sortOrder: zod.number(),
+  createdAt: zod.string(),
+  updatedAt: zod.string(),
+});
+export const ListCommitteeMembersResponse = zod.array(
+  ListCommitteeMembersResponseItem,
+);
+
+/**
+ * @summary Add a committee member (admin only)
+ */
+
+export const CreateCommitteeMemberBody = zod.object({
+  nameEn: zod.string().min(1),
+  nameTe: zod.string().optional(),
+  nameHi: zod.string().optional(),
+  roleEn: zod.string().min(1),
+  roleTe: zod.string().optional(),
+  roleHi: zod.string().optional(),
+  groupKey: zod.string().min(1),
+  sortOrder: zod.number().optional(),
+});
+
+/**
+ * @summary Update a committee member (admin only)
+ */
+export const UpdateCommitteeMemberParams = zod.object({
+  id: zod.coerce.number(),
+});
+
+export const UpdateCommitteeMemberBody = zod.object({
+  nameEn: zod.string().min(1).optional(),
+  nameTe: zod.string().optional(),
+  nameHi: zod.string().optional(),
+  roleEn: zod.string().min(1).optional(),
+  roleTe: zod.string().optional(),
+  roleHi: zod.string().optional(),
+  groupKey: zod.string().optional(),
+  sortOrder: zod.number().optional(),
+});
+
+export const UpdateCommitteeMemberResponse = zod.object({
+  id: zod.number(),
+  nameEn: zod.string(),
+  nameTe: zod.string(),
+  nameHi: zod.string(),
+  roleEn: zod.string(),
+  roleTe: zod.string(),
+  roleHi: zod.string(),
+  groupKey: zod.string(),
+  sortOrder: zod.number(),
+  createdAt: zod.string(),
+  updatedAt: zod.string(),
+});
+
+/**
+ * @summary Delete a committee member (admin only)
+ */
+export const DeleteCommitteeMemberParams = zod.object({
+  id: zod.coerce.number(),
+});
+
+/**
+ * @summary Request a presigned URL for file upload
+ */
+
+export const RequestUploadUrlBody = zod.object({
+  name: zod.string().min(1),
+  size: zod.number().min(1),
+  contentType: zod.string().min(1),
+});
+
+export const RequestUploadUrlResponse = zod.object({
+  uploadURL: zod.string().url(),
+  objectPath: zod.string(),
+  metadata: zod
+    .object({
+      name: zod.string().min(1),
+      size: zod.number().min(1),
+      contentType: zod.string().min(1),
+    })
+    .optional(),
+});

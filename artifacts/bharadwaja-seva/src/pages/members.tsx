@@ -1,17 +1,32 @@
+import { useMemo } from "react";
 import { useLocation } from "wouter";
 import { motion } from "framer-motion";
 import { ArrowLeft } from "lucide-react";
+import { useListCommitteeMembers } from "@workspace/api-client-react";
 import { Button } from "@/components/ui/button";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { WhatsAppFAB } from "@/components/WhatsAppFAB";
 import { CommitteeCard } from "@/components/CommitteeCard";
-import { officeBearers, executiveBody, members } from "@/data/committee";
+import { apiMemberToCommittee, type ApiMember } from "@/lib/dataAdapters";
 import { useLanguage } from "@/i18n/LanguageProvider";
 
 export default function Members() {
   const [, setLocation] = useLocation();
   const { lang, t } = useLanguage();
+  const { data: apiMembers = [] } = useListCommitteeMembers();
+
+  const { officeBearers, executiveBody, plainMembers } = useMemo(() => {
+    const ob: ApiMember[] = [];
+    const eb: ApiMember[] = [];
+    const pm: ApiMember[] = [];
+    for (const m of apiMembers) {
+      if (m.groupKey === "office_bearers") ob.push(m);
+      else if (m.groupKey === "executive_body") eb.push(m);
+      else pm.push(m);
+    }
+    return { officeBearers: ob, executiveBody: eb, plainMembers: pm };
+  }, [apiMembers]);
 
   const navigateHome = (sectionId: string) => {
     sessionStorage.setItem("bss-pending-scroll", sectionId || "home");
@@ -27,7 +42,6 @@ export default function Members() {
       <SiteHeader onNavigateHome={navigateHome} />
 
       <main className="flex-1">
-        {/* PAGE HEADER */}
         <section className="relative py-16 md:py-20 bg-gradient-to-r from-primary to-primary/80 text-primary-foreground overflow-hidden">
           <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-15"></div>
           <div className="container relative z-10 mx-auto px-4 text-center">
@@ -58,25 +72,24 @@ export default function Members() {
           </div>
         </section>
 
-        {/* MEMBERS LIST */}
         <section className="py-16 md:py-20 bg-muted">
           <div className="container mx-auto px-4 max-w-6xl">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
               {officeBearers.map((m, i) => (
-                <CommitteeCard key={`ob-${i}`} member={m} lang={lang} index={i} featured />
+                <CommitteeCard key={`ob-${m.id}`} member={apiMemberToCommittee(m)} lang={lang} index={i} featured />
               ))}
               {executiveBody.map((m, i) => (
                 <CommitteeCard
-                  key={`eb-${i}`}
-                  member={m}
+                  key={`eb-${m.id}`}
+                  member={apiMemberToCommittee(m)}
                   lang={lang}
                   index={officeBearers.length + i}
                 />
               ))}
-              {members.map((m, i) => (
+              {plainMembers.map((m, i) => (
                 <CommitteeCard
-                  key={`m-${i}`}
-                  member={m}
+                  key={`m-${m.id}`}
+                  member={apiMemberToCommittee(m)}
                   lang={lang}
                   index={officeBearers.length + executiveBody.length + i}
                 />

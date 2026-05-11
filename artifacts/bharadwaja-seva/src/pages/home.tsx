@@ -21,9 +21,10 @@ import {
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { WhatsAppFAB } from "@/components/WhatsAppFAB";
-import { recentPhotos, localized, type ServiceCategory } from "@/data/events";
+import { localized, type ServiceCategory } from "@/data/events";
 import { mediaCoverage } from "@/data/media";
-import { officeBearers, executiveBody } from "@/data/committee";
+import { useListEvents, useListCommitteeMembers } from "@workspace/api-client-react";
+import { recentPhotosFromEvents, apiMemberToCommittee } from "@/lib/dataAdapters";
 import { CommitteeCard } from "@/components/CommitteeCard";
 import { Lightbox, type LightboxPhoto } from "@/components/Lightbox";
 import { useContributeDialog } from "@/components/ContributeDialog";
@@ -64,6 +65,17 @@ export default function Home() {
   const { lang, t } = useLanguage();
   const { open: openContribute } = useContributeDialog();
   const [mediaIndex, setMediaIndex] = useState<number | null>(null);
+  const { data: apiEvents = [] } = useListEvents();
+  const { data: apiMembers = [] } = useListCommitteeMembers();
+  const recentPhotos = useMemo(() => recentPhotosFromEvents(apiEvents, 4), [apiEvents]);
+  const officeBearers = useMemo(
+    () => apiMembers.filter((m) => m.groupKey === "office_bearers").map(apiMemberToCommittee),
+    [apiMembers],
+  );
+  const executiveBody = useMemo(
+    () => apiMembers.filter((m) => m.groupKey === "executive_body").map(apiMemberToCommittee),
+    [apiMembers],
+  );
   const mediaLightboxPhotos: LightboxPhoto[] = useMemo(
     () =>
       mediaCoverage.map((m) => ({

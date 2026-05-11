@@ -1,14 +1,18 @@
 import { useState, useMemo, useEffect } from "react";
 import { useLocation } from "wouter";
 import { motion } from "framer-motion";
-import { events, localized, type ServiceCategory } from "@/data/events";
+import { useListEvents } from "@workspace/api-client-react";
+import { localized, type ServiceCategory } from "@/data/events";
+import { apiEventToEventGroup, apiEventCategoryRaw } from "@/lib/dataAdapters";
 import { Lightbox, type LightboxPhoto } from "@/components/Lightbox";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { WhatsAppFAB } from "@/components/WhatsAppFAB";
 import { useLanguage } from "@/i18n/LanguageProvider";
 
-const CATEGORY_LABEL: Record<ServiceCategory, string> = {
+type CategoryKey = ServiceCategory | "other";
+
+const CATEGORY_LABEL: Record<CategoryKey, string> = {
   feeding: "Feeding the Needy",
   education: "Supporting Education",
   medical: "Medical Relief",
@@ -17,32 +21,42 @@ const CATEGORY_LABEL: Record<ServiceCategory, string> = {
   women: "Women & Children",
   environment: "Environmental Protection",
   community: "Community Service",
+  other: "Other",
 };
 
-const CATEGORY_KEYS = Object.keys(CATEGORY_LABEL) as ServiceCategory[];
+const CATEGORY_KEYS = Object.keys(CATEGORY_LABEL) as CategoryKey[];
 
 export default function Gallery() {
   const [, setLocation] = useLocation();
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
-  const [category, setCategory] = useState<ServiceCategory | null>(null);
+  const [category, setCategory] = useState<CategoryKey | null>(null);
   const { lang, t } = useLanguage();
+  const { data: apiEvents = [] } = useListEvents();
 
   useEffect(() => {
     const stored = sessionStorage.getItem("bss-gallery-category");
     if (stored && (CATEGORY_KEYS as string[]).includes(stored)) {
-      setCategory(stored as ServiceCategory);
+      setCategory(stored as CategoryKey);
       sessionStorage.removeItem("bss-gallery-category");
     }
   }, []);
 
+  const allEvents = useMemo(
+    () =>
+      [...apiEvents]
+        .sort((a, b) => b.eventDate.localeCompare(a.eventDate))
+        .map((e) => ({ group: apiEventToEventGroup(e), rawCategory: apiEventCategoryRaw(e) })),
+    [apiEvents],
+  );
+
   const filteredEvents = useMemo(
-    () => (category ? events.filter((e) => e.categories.includes(category)) : events),
-    [category],
+    () => (category ? allEvents.filter((e) => e.rawCategory === category) : allEvents),
+    [category, allEvents],
   );
 
   const lightboxPhotos: LightboxPhoto[] = useMemo(
     () =>
-      filteredEvents.flatMap((event) =>
+      filteredEvents.flatMap(({ group: event }) =>
         event.photos.map((p) => ({
           src: p.src,
           alt: p.alt,
@@ -54,7 +68,7 @@ export default function Gallery() {
 
   const photoIndexFor = (eventId: string, photoIdx: number) => {
     let cursor = 0;
-    for (const event of filteredEvents) {
+    for (const { group: event } of filteredEvents) {
       if (event.id === eventId) return cursor + photoIdx;
       cursor += event.photos.length;
     }
@@ -126,7 +140,7 @@ export default function Gallery() {
                 </button>
               </div>
             )}
-            {filteredEvents.map((event, eventIdx) => (
+            {filteredEvents.map(({ group: event }, eventIdx) => (
               <motion.div
                 key={event.id}
                 initial={{ opacity: 0, y: 20 }}
