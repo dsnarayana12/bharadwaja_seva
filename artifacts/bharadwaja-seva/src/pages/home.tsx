@@ -281,7 +281,7 @@ export default function Home() {
           <div className="container mx-auto px-4">
             <div className="text-center mb-16">
               <h3 className="text-3xl font-serif font-bold uppercase tracking-wide inline-block relative pb-4">
-                <span className="text-foreground">{t("services.title.a")}</span>
+                <span className="text-primary">{t("services.title.a")}</span>
                 <span className="text-primary">{t("services.title.b")}</span>
                 <span className="absolute bottom-0 left-1/4 right-1/4 h-1 bg-primary"></span>
               </h3>
@@ -323,7 +323,7 @@ export default function Home() {
           <div className="container mx-auto px-4">
             <div className="text-center mb-12">
               <h3 className="text-3xl font-serif font-bold uppercase tracking-wide inline-block relative pb-4">
-                <span className="text-foreground">{t("glimpses.title.a")}</span>
+                <span className="text-primary">{t("glimpses.title.a")}</span>
                 <span className="text-primary">{t("glimpses.title.b")}</span>
                 <span className="absolute bottom-0 left-1/4 right-1/4 h-1 bg-secondary"></span>
               </h3>
@@ -383,7 +383,7 @@ export default function Home() {
           <div className="container mx-auto px-4">
             <div className="text-center mb-12">
               <h3 className="text-3xl font-serif font-bold uppercase tracking-wide inline-block relative pb-4">
-                <span className="text-foreground">{t("media.title.a")}</span>
+                <span className="text-primary">{t("media.title.a")}</span>
                 <span className="text-primary">{t("media.title.b")}</span>
                 <span className="absolute bottom-0 left-1/4 right-1/4 h-1 bg-primary"></span>
               </h3>
@@ -468,7 +468,7 @@ export default function Home() {
           <div className="container mx-auto px-4">
             <div className="text-center mb-14">
               <h3 className="text-3xl md:text-4xl font-serif font-bold uppercase tracking-wide inline-block relative pb-4">
-                <span className="text-foreground">{t("committee.title.a")}</span>
+                <span className="text-primary">{t("committee.title.a")}</span>
                 <span className="text-primary">{t("committee.title.b")}</span>
                 <span className="absolute bottom-0 left-1/4 right-1/4 h-1 bg-primary"></span>
               </h3>
@@ -582,7 +582,7 @@ export default function Home() {
           <div className="container mx-auto px-4">
             <div className="text-center mb-16">
               <h3 className="text-3xl font-serif font-bold uppercase tracking-wide inline-block relative pb-4">
-                <span className="text-foreground">{t("contact.title.a")}</span>
+                <span className="text-primary">{t("contact.title.a")}</span>
                 <span className="text-primary">{t("contact.title.b")}</span>
                 <span className="absolute bottom-0 left-1/4 right-1/4 h-1 bg-primary"></span>
               </h3>
