@@ -11,6 +11,16 @@ export interface LocalizedString {
   hi: string;
 }
 
+export type ServiceCategory =
+  | "feeding"
+  | "education"
+  | "medical"
+  | "youth"
+  | "elderly"
+  | "women"
+  | "environment"
+  | "community";
+
 export interface EventGroup {
   id: string;
   title: LocalizedString;
@@ -18,6 +28,7 @@ export interface EventGroup {
   dateLabel: LocalizedString;
   caption: LocalizedString;
   photos: EventPhoto[];
+  categories: ServiceCategory[];
 }
 
 const BASE = `${import.meta.env.BASE_URL}gallery`;
@@ -51,6 +62,7 @@ export const events: EventGroup[] = [
         alt: "Press announcement of Ugadi Puraskaralu 2026 by Sangham leadership",
       },
     ],
+    categories: ["women", "community"],
   },
   {
     id: "cultural-performer-mar-2026",
@@ -76,6 +88,7 @@ export const events: EventGroup[] = [
         alt: "Classical Bharatanatyam dancer in traditional costume",
       },
     ],
+    categories: ["community"],
   },
   {
     id: "ugadi-puraskaralu-2025",
@@ -105,6 +118,7 @@ export const events: EventGroup[] = [
         alt: "Ornate Telugu invitation card for the Ugadi Puraskaralu 2025 awards ceremony",
       },
     ],
+    categories: ["women", "community"],
   },
   {
     id: "scholarships-nov-2025",
@@ -130,6 +144,7 @@ export const events: EventGroup[] = [
         alt: "Scholarship distribution ceremony to engineering and intermediate students",
       },
     ],
+    categories: ["education", "youth"],
   },
   {
     id: "annadanam-nov-2025",
@@ -155,6 +170,7 @@ export const events: EventGroup[] = [
         alt: "Karthika Masam Annadanam community meal service at temple",
       },
     ],
+    categories: ["feeding", "community"],
   },
   {
     id: "meritorious-students-jul-2025",
@@ -180,6 +196,7 @@ export const events: EventGroup[] = [
         alt: "Invitation to prize money distribution for meritorious Class 10 students",
       },
     ],
+    categories: ["education", "youth"],
   },
   {
     id: "chalivendram-apr-2025",
@@ -205,6 +222,7 @@ export const events: EventGroup[] = [
         alt: "Bharadwaja Chalivendram inauguration with Sangham members and local community",
       },
     ],
+    categories: ["feeding", "community", "environment"],
   },
 ];
 
@@ -214,6 +232,7 @@ export interface RecentPhoto {
   eventId: string;
   eventTitle: LocalizedString;
   dateLabel: LocalizedString;
+  categories: ServiceCategory[];
 }
 
 const eventsByDateDesc = [...events].sort((a, b) => b.date.localeCompare(a.date));
@@ -225,10 +244,15 @@ export const allPhotos: RecentPhoto[] = eventsByDateDesc.flatMap((e) =>
     eventId: e.id,
     eventTitle: e.title,
     dateLabel: e.dateLabel,
+    categories: e.categories,
   }))
 );
 
 export const recentPhotos: RecentPhoto[] = allPhotos.slice(0, 4);
+
+export function photosForCategory(cat: ServiceCategory): RecentPhoto[] {
+  return allPhotos.filter((p) => p.categories.includes(cat));
+}
 
 export function localized(value: LocalizedString, lang: Language): string {
   return value[lang] ?? value.en;
