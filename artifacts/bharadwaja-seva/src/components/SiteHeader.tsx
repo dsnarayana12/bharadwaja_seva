@@ -26,7 +26,7 @@ export function SiteHeader({ onNavigateHome }: SiteHeaderProps) {
   return (
     <header className="relative w-full shadow-md bg-primary text-primary-foreground border-b-4 border-accent">
       {/* Desktop-only: language toggle vertically centered on the right edge */}
-      <div className="hidden lg:flex absolute right-4 top-1/2 -translate-y-1/2 z-20">
+      <div className="hidden lg:flex absolute right-4 top-[68%] -translate-y-1/2 z-20">
         <LanguageToggle />
       </div>
       {/* Top row: logo + brand (left on lg+), with controls on the right */}
