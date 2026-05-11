@@ -259,7 +259,7 @@ export default function Home() {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6 }}
-                className="relative"
+                className="relative w-full max-w-sm md:max-w-xs lg:max-w-sm xl:max-w-md mx-auto"
               >
                 <div className="absolute inset-0 bg-secondary transform translate-x-4 translate-y-4 -z-10"></div>
                 <img
