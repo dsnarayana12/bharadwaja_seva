@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation } from "wouter";
 import { useAdminLogin, useAdminMe } from "@workspace/api-client-react";
 import { useQueryClient } from "@tanstack/react-query";
@@ -18,10 +18,11 @@ export default function AdminLogin() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
 
-  if (me) {
-    setLocation("/admin");
-    return null;
-  }
+  useEffect(() => {
+    if (me) setLocation("/admin");
+  }, [me, setLocation]);
+
+  if (me) return null;
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
