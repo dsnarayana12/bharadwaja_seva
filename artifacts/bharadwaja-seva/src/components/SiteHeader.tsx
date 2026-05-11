@@ -56,7 +56,7 @@ export function SiteHeader({ onNavigateHome }: SiteHeaderProps) {
 
       {/* Bottom row: nav (lg+) + contribute button — pulled up to cover the gap */}
       <div className="hidden lg:block lg:-mt-12 xl:-mt-14 relative z-10">
-        <div className="container mx-auto px-4 py-2 flex items-center justify-end gap-6">
+        <div className="container mx-auto px-4 py-2 flex items-center justify-center gap-6">
           <nav className="flex items-center gap-6 font-semibold text-sm">
             <button
               onClick={() => onNavigateHome("home")}
