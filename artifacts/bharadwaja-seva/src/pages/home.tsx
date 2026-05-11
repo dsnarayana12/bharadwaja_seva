@@ -232,7 +232,7 @@ export default function Home() {
         {/* ABOUT */}
         <section id="about" className="py-20 bg-background relative">
           <div className="container mx-auto px-4">
-            <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div className="grid md:grid-cols-2 gap-12 items-stretch">
               <motion.div
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
@@ -259,13 +259,13 @@ export default function Home() {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6 }}
-                className="relative w-full max-w-sm md:max-w-xs lg:max-w-sm xl:max-w-md mx-auto"
+                className="relative h-full flex items-center justify-center mx-auto"
               >
                 <div className="absolute inset-0 bg-secondary transform translate-x-4 translate-y-4 -z-10"></div>
                 <img
                   src={aboutShlokaImage}
                   alt={t("about.title.b")}
-                  className="w-full h-auto shadow-xl border-4 border-white bg-white"
+                  className="max-h-full w-auto h-full object-contain shadow-xl border-4 border-white bg-white"
                 />
               </motion.div>
             </div>
