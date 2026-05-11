@@ -479,13 +479,6 @@ export default function Home() {
 
             <div className="max-w-5xl mx-auto space-y-12">
               <div>
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="h-px flex-1 bg-border"></div>
-                  <h4 className="text-sm md:text-base font-bold uppercase tracking-[0.2em] text-secondary">
-                    {t("committee.officeBearers")}
-                  </h4>
-                  <div className="h-px flex-1 bg-border"></div>
-                </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
                   {officeBearers.map((m, i) => (
                     <CommitteeCard key={m.name.en} member={m} lang={lang} index={i} featured />
@@ -494,13 +487,6 @@ export default function Home() {
               </div>
 
               <div>
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="h-px flex-1 bg-border"></div>
-                  <h4 className="text-sm md:text-base font-bold uppercase tracking-[0.2em] text-secondary">
-                    {t("committee.executiveBody")}
-                  </h4>
-                  <div className="h-px flex-1 bg-border"></div>
-                </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
                   {executiveBody.map((m, i) => (
                     <CommitteeCard key={m.name.en} member={m} lang={lang} index={i} />

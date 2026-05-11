@@ -79,8 +79,8 @@ export const translations = {
       "Press articles and news features about our work in the community. Click any clipping to read it in full.",
     "media.openAria": "Open media coverage article",
 
-    "committee.title.a": "Committee ",
-    "committee.title.b": "Members",
+    "committee.title.a": "Executive ",
+    "committee.title.b": "Body",
     "committee.intro":
       "The dedicated team behind Bharadwaja Seva Sangham, guiding our mission of selfless service.",
     "committee.officeBearers": "Office Bearers",
@@ -240,8 +240,8 @@ export const translations = {
       "మా సేవా కార్యక్రమాల గురించి ప్రచురితమైన వార్తలు మరియు ప్రత్యేక కథనాలు. పూర్తిగా చదవడానికి ఏదైనా కథనంపై క్లిక్ చేయండి.",
     "media.openAria": "మీడియా కథనం తెరవండి",
 
-    "committee.title.a": "కమిటీ ",
-    "committee.title.b": "సభ్యులు",
+    "committee.title.a": "కార్య",
+    "committee.title.b": "వర్గం",
     "committee.intro":
       "నిస్వార్థ సేవ లక్ష్యంతో భరద్వాజ సేవా సంఘాన్ని నడిపిస్తున్న అంకిత బృందం.",
     "committee.officeBearers": "ప్రధాన పదాధికారులు",
@@ -401,8 +401,8 @@ export const translations = {
       "समुदाय में हमारे कार्य के बारे में प्रेस लेख और समाचार। पूरा पढ़ने के लिए किसी भी कतरन पर क्लिक करें।",
     "media.openAria": "मीडिया कवरेज लेख खोलें",
 
-    "committee.title.a": "समिति ",
-    "committee.title.b": "सदस्य",
+    "committee.title.a": "कार्य",
+    "committee.title.b": "कारिणी",
     "committee.intro":
       "भरद्वाज सेवा संघम के पीछे समर्पित टीम, जो हमारे निःस्वार्थ सेवा के मिशन का मार्गदर्शन करती है।",
     "committee.officeBearers": "मुख्य पदाधिकारी",
