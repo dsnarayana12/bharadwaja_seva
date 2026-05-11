@@ -1,6 +1,7 @@
 import { useState, useMemo, useEffect } from "react";
 import { useLocation } from "wouter";
 import { motion } from "framer-motion";
+import { ArrowLeft } from "lucide-react";
 import { useListEvents } from "@workspace/api-client-react";
 import { localized, type ServiceCategory } from "@/data/events";
 import { apiEventToEventGroup, apiEventCategoryRaw } from "@/lib/dataAdapters";
@@ -93,6 +94,18 @@ export default function Gallery() {
         <section className="relative py-16 md:py-20 bg-gradient-to-r from-primary to-primary/80 text-primary-foreground overflow-hidden">
           <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-15"></div>
           <div className="container relative z-10 mx-auto px-4 text-center">
+            <div className="mb-6 flex justify-start">
+              <button
+                type="button"
+                onClick={() => navigateHome("home")}
+                className="relative z-20 inline-flex items-center gap-1.5 rounded bg-white/10 hover:bg-white/20 px-3 py-1.5 text-white text-sm font-semibold uppercase tracking-wider backdrop-blur-sm cursor-pointer"
+                aria-label={t("members.back")}
+              >
+                <ArrowLeft className="w-4 h-4" />
+                <span className="hidden sm:inline">{t("members.back")}</span>
+                <span className="sm:hidden">Back</span>
+              </button>
+            </div>
             <motion.div
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
