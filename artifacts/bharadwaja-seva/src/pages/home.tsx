@@ -259,14 +259,18 @@ export default function Home() {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6 }}
-                className="relative h-full flex items-center justify-center mx-auto"
+                className="relative h-full min-h-[16rem]"
               >
-                <div className="absolute inset-0 bg-secondary transform translate-x-4 translate-y-4 -z-10"></div>
-                <img
-                  src={aboutShlokaImage}
-                  alt={t("about.title.b")}
-                  className="max-h-full w-auto h-full object-contain shadow-xl border-4 border-white bg-white"
-                />
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="relative h-full">
+                    <div className="absolute inset-0 bg-secondary transform translate-x-4 translate-y-4 -z-10"></div>
+                    <img
+                      src={aboutShlokaImage}
+                      alt={t("about.title.b")}
+                      className="h-full w-auto max-w-full object-contain shadow-xl border-4 border-white bg-white"
+                    />
+                  </div>
+                </div>
               </motion.div>
             </div>
           </div>
