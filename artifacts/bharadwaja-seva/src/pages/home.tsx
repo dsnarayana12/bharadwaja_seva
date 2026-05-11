@@ -15,16 +15,16 @@ import {
   MapPin,
   Phone,
   Mail,
-  User,
-  Crown,
   ArrowRight,
+  User,
 } from "lucide-react";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { WhatsAppFAB } from "@/components/WhatsAppFAB";
 import { recentPhotos, localized } from "@/data/events";
 import { mediaCoverage } from "@/data/media";
-import { officeBearers, executiveBody, type CommitteeMember } from "@/data/committee";
+import { officeBearers, executiveBody } from "@/data/committee";
+import { CommitteeCard } from "@/components/CommitteeCard";
 import { Lightbox, type LightboxPhoto } from "@/components/Lightbox";
 import { useContributeDialog } from "@/components/ContributeDialog";
 import { useLanguage } from "@/i18n/LanguageProvider";
@@ -35,53 +35,6 @@ interface ServiceCard {
   titleKey: TranslationKey;
   descKey: TranslationKey;
   icon: typeof HandHeart;
-}
-
-function CommitteeCard({
-  member,
-  lang,
-  index,
-  featured = false,
-}: {
-  member: CommitteeMember;
-  lang: Language;
-  index: number;
-  featured?: boolean;
-}) {
-  const Icon = featured ? Crown : User;
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 16 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.4, delay: index * 0.06 }}
-      className={`group bg-white shadow-md hover:shadow-xl transition-all border-l-4 ${
-        featured ? "border-secondary" : "border-primary"
-      } p-5 flex items-start gap-4`}
-    >
-      <div
-        className={`shrink-0 w-12 h-12 rounded-full flex items-center justify-center ${
-          featured
-            ? "bg-secondary/10 text-secondary"
-            : "bg-primary/10 text-primary"
-        }`}
-      >
-        <Icon size={22} />
-      </div>
-      <div className="min-w-0 flex-1">
-        <p className="font-serif font-bold text-base md:text-lg text-foreground leading-tight">
-          {member.name[lang]}
-        </p>
-        <p
-          className={`mt-1 text-xs md:text-sm uppercase tracking-wider font-bold ${
-            featured ? "text-secondary" : "text-primary"
-          }`}
-        >
-          {member.role[lang]}
-        </p>
-      </div>
-    </motion.div>
-  );
 }
 
 const SERVICES: ServiceCard[] = [

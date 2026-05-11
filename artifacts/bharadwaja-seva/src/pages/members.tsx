@@ -1,15 +1,17 @@
 import { useLocation } from "wouter";
 import { motion } from "framer-motion";
-import { Users, ArrowLeft } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { WhatsAppFAB } from "@/components/WhatsAppFAB";
+import { CommitteeCard } from "@/components/CommitteeCard";
+import { officeBearers, executiveBody, members } from "@/data/committee";
 import { useLanguage } from "@/i18n/LanguageProvider";
 
 export default function Members() {
   const [, setLocation] = useLocation();
-  const { t } = useLanguage();
+  const { lang, t } = useLanguage();
 
   const navigateHome = (sectionId: string) => {
     sessionStorage.setItem("bss-pending-scroll", sectionId || "home");
@@ -44,25 +46,28 @@ export default function Members() {
           </div>
         </section>
 
-        {/* PLACEHOLDER CONTENT */}
-        <section className="py-20">
-          <div className="container mx-auto px-4 max-w-3xl">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-              className="bg-muted border-2 border-dashed border-secondary/50 p-10 md:p-14 text-center"
-            >
-              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 text-primary mb-6">
-                <Users className="w-8 h-8" />
-              </div>
-              <h3 className="font-serif text-2xl md:text-3xl font-bold text-foreground mb-3">
-                {t("members.empty.title")}
-              </h3>
-              <p className="text-muted-foreground leading-relaxed mb-8">
-                {t("members.empty.desc")}
-              </p>
+        {/* MEMBERS LIST */}
+        <section className="py-16 md:py-20 bg-muted">
+          <div className="container mx-auto px-4 max-w-6xl space-y-5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+              {officeBearers.map((m, i) => (
+                <CommitteeCard key={`ob-${i}`} member={m} lang={lang} index={i} featured />
+              ))}
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+              {executiveBody.map((m, i) => (
+                <CommitteeCard key={`eb-${i}`} member={m} lang={lang} index={i} />
+              ))}
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+              {members.map((m, i) => (
+                <CommitteeCard key={`m-${i}`} member={m} lang={lang} index={i} />
+              ))}
+            </div>
+
+            <div className="pt-8 flex justify-center">
               <Button
                 onClick={() => navigateHome("home")}
                 variant="outline"
@@ -71,7 +76,7 @@ export default function Members() {
                 <ArrowLeft className="w-4 h-4 mr-2" />
                 {t("members.back")}
               </Button>
-            </motion.div>
+            </div>
           </div>
         </section>
       </main>
