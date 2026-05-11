@@ -42,7 +42,7 @@ const CATEGORY_OPTIONS = [
   { value: "elderly", label: "Care for the Elderly" },
   { value: "women", label: "Women & Children" },
   { value: "environment", label: "Environmental Protection" },
-  { value: "community", label: "Community Service" },
+  { value: "community", label: "Community Services" },
   { value: "other", label: "Other" },
 ];
 
