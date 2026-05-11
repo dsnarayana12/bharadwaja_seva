@@ -1,8 +1,6 @@
 import { useContributeDialog } from "@/components/ContributeDialog";
 import { useLanguage } from "@/i18n/LanguageProvider";
-
-const LOGO_SRC =
-  "https://img1.wsimg.com/isteam/ip/210338f7-f5fb-4633-b166-d0068dd8981c/baradwaja%20logo.jpg/:/rs=h:200,cg:true,m/qt=q:95";
+import LOGO_SRC from "@/assets/logo.png";
 
 interface SiteFooterProps {
   onNavigateHome: (sectionId: string) => void;
@@ -18,8 +16,12 @@ export function SiteFooter({ onNavigateHome, onNavigateGallery }: SiteFooterProp
       <div className="container mx-auto px-4">
         <div className="grid md:grid-cols-3 gap-12 mb-12">
           <div>
-            <div className="flex items-center gap-3 mb-6 bg-white p-2 inline-block rounded">
-              <img src={LOGO_SRC} alt={t("brand.name")} className="h-10 w-auto" />
+            <div className="mb-6">
+              <img
+                src={LOGO_SRC}
+                alt={t("brand.name")}
+                className="h-16 sm:h-20 md:h-24 lg:h-36 xl:h-40 w-auto object-contain"
+              />
             </div>
             <h4 className="text-xl font-serif font-bold mb-2 uppercase tracking-wider text-accent">
               {t("brand.name")}
