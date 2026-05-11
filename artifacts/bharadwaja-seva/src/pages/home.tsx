@@ -283,7 +283,7 @@ export default function Home() {
               <h3 className="text-3xl font-serif font-bold uppercase tracking-wide inline-block relative pb-4">
                 <span className="text-primary">{t("services.title.a")}</span>
                 <span className="text-primary">{t("services.title.b")}</span>
-                <span className="absolute bottom-0 left-1/4 right-1/4 h-1 bg-primary"></span>
+                <span className="absolute bottom-0 left-1/4 right-1/4 h-1 bg-accent"></span>
               </h3>
               <p className="mt-6 text-lg text-muted-foreground max-w-2xl mx-auto">
                 {t("services.intro")}
@@ -325,7 +325,7 @@ export default function Home() {
               <h3 className="text-3xl font-serif font-bold uppercase tracking-wide inline-block relative pb-4">
                 <span className="text-primary">{t("glimpses.title.a")}</span>
                 <span className="text-primary">{t("glimpses.title.b")}</span>
-                <span className="absolute bottom-0 left-1/4 right-1/4 h-1 bg-secondary"></span>
+                <span className="absolute bottom-0 left-1/4 right-1/4 h-1 bg-accent"></span>
               </h3>
               <p className="mt-6 text-lg text-muted-foreground max-w-2xl mx-auto">
                 {t("glimpses.intro")}
@@ -385,7 +385,7 @@ export default function Home() {
               <h3 className="text-3xl font-serif font-bold uppercase tracking-wide inline-block relative pb-4">
                 <span className="text-primary">{t("media.title.a")}</span>
                 <span className="text-primary">{t("media.title.b")}</span>
-                <span className="absolute bottom-0 left-1/4 right-1/4 h-1 bg-primary"></span>
+                <span className="absolute bottom-0 left-1/4 right-1/4 h-1 bg-accent"></span>
               </h3>
               <p className="mt-6 text-lg text-muted-foreground max-w-2xl mx-auto">
                 {t("media.intro")}
@@ -470,7 +470,7 @@ export default function Home() {
               <h3 className="text-3xl md:text-4xl font-serif font-bold uppercase tracking-wide inline-block relative pb-4">
                 <span className="text-primary">{t("committee.title.a")}</span>
                 <span className="text-primary">{t("committee.title.b")}</span>
-                <span className="absolute bottom-0 left-1/4 right-1/4 h-1 bg-primary"></span>
+                <span className="absolute bottom-0 left-1/4 right-1/4 h-1 bg-accent"></span>
               </h3>
               <p className="mt-6 text-lg text-muted-foreground max-w-2xl mx-auto">
                 {t("committee.intro")}
@@ -584,7 +584,7 @@ export default function Home() {
               <h3 className="text-3xl font-serif font-bold uppercase tracking-wide inline-block relative pb-4">
                 <span className="text-primary">{t("contact.title.a")}</span>
                 <span className="text-primary">{t("contact.title.b")}</span>
-                <span className="absolute bottom-0 left-1/4 right-1/4 h-1 bg-primary"></span>
+                <span className="absolute bottom-0 left-1/4 right-1/4 h-1 bg-accent"></span>
               </h3>
             </div>
 
