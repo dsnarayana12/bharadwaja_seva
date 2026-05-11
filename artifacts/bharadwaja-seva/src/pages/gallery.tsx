@@ -1,33 +1,60 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { useLocation } from "wouter";
 import { motion } from "framer-motion";
-import { events, localized } from "@/data/events";
+import { events, localized, type ServiceCategory } from "@/data/events";
 import { Lightbox, type LightboxPhoto } from "@/components/Lightbox";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { WhatsAppFAB } from "@/components/WhatsAppFAB";
 import { useLanguage } from "@/i18n/LanguageProvider";
 
+const CATEGORY_LABEL: Record<ServiceCategory, string> = {
+  feeding: "Feeding the Needy",
+  education: "Supporting Education",
+  medical: "Medical Relief",
+  youth: "Youth Empowerment",
+  elderly: "Care for the Elderly",
+  women: "Women & Children",
+  environment: "Environmental Protection",
+  community: "Community Service",
+};
+
+const CATEGORY_KEYS = Object.keys(CATEGORY_LABEL) as ServiceCategory[];
+
 export default function Gallery() {
   const [, setLocation] = useLocation();
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const [category, setCategory] = useState<ServiceCategory | null>(null);
   const { lang, t } = useLanguage();
+
+  useEffect(() => {
+    const stored = sessionStorage.getItem("bss-gallery-category");
+    if (stored && (CATEGORY_KEYS as string[]).includes(stored)) {
+      setCategory(stored as ServiceCategory);
+      sessionStorage.removeItem("bss-gallery-category");
+    }
+  }, []);
+
+  const filteredEvents = useMemo(
+    () => (category ? events.filter((e) => e.categories.includes(category)) : events),
+    [category],
+  );
 
   const lightboxPhotos: LightboxPhoto[] = useMemo(
     () =>
-      events.flatMap((event) =>
+      filteredEvents.flatMap((event) =>
         event.photos.map((p) => ({
           src: p.src,
           alt: p.alt,
           caption: `${localized(event.title, lang)} • ${localized(event.dateLabel, lang)}`,
         }))
       ),
-    [lang]
+    [lang, filteredEvents]
   );
 
   const photoIndexFor = (eventId: string, photoIdx: number) => {
     let cursor = 0;
-    for (const event of events) {
+    for (const event of filteredEvents) {
       if (event.id === eventId) return cursor + photoIdx;
       cursor += event.photos.length;
     }
@@ -63,6 +90,21 @@ export default function Gallery() {
               <p className="text-base md:text-lg text-white/90 max-w-2xl mx-auto">
                 {t("gallery.hero.subtitle")}
               </p>
+              {category && (
+                <div className="mt-6 flex justify-center">
+                  <div className="inline-flex items-center gap-2 bg-white/15 backdrop-blur-sm px-4 py-2 rounded-full text-sm font-semibold text-white">
+                    <span>Showing: {CATEGORY_LABEL[category]}</span>
+                    <button
+                      type="button"
+                      onClick={() => setCategory(null)}
+                      className="ml-1 hover:text-accent font-bold text-base leading-none"
+                      aria-label="Show all"
+                    >
+                      ×
+                    </button>
+                  </div>
+                </div>
+              )}
             </motion.div>
           </div>
         </section>
@@ -70,7 +112,21 @@ export default function Gallery() {
         {/* EVENT GRIDS */}
         <section className="py-16 md:py-20">
           <div className="container mx-auto px-4 max-w-6xl space-y-16">
-            {events.map((event, eventIdx) => (
+            {filteredEvents.length === 0 && (
+              <div className="text-center bg-muted border-2 border-dashed border-border p-10">
+                <p className="text-muted-foreground mb-4">
+                  No photos available for this category yet. Please check back soon.
+                </p>
+                <button
+                  type="button"
+                  onClick={() => setCategory(null)}
+                  className="text-primary font-bold uppercase tracking-wider text-sm hover:underline"
+                >
+                  Show all events
+                </button>
+              </div>
+            )}
+            {filteredEvents.map((event, eventIdx) => (
               <motion.div
                 key={event.id}
                 initial={{ opacity: 0, y: 20 }}

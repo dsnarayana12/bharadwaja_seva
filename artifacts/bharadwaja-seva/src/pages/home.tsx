@@ -21,12 +21,7 @@ import {
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { WhatsAppFAB } from "@/components/WhatsAppFAB";
-import {
-  recentPhotos,
-  localized,
-  photosForCategory,
-  type ServiceCategory,
-} from "@/data/events";
+import { recentPhotos, localized, type ServiceCategory } from "@/data/events";
 import { mediaCoverage } from "@/data/media";
 import { officeBearers, executiveBody } from "@/data/committee";
 import { CommitteeCard } from "@/components/CommitteeCard";
@@ -69,13 +64,6 @@ export default function Home() {
   const { lang, t } = useLanguage();
   const { open: openContribute } = useContributeDialog();
   const [mediaIndex, setMediaIndex] = useState<number | null>(null);
-  const [glimpseCategory, setGlimpseCategory] = useState<ServiceCategory | null>(null);
-
-  const filteredGlimpses = useMemo(
-    () => (glimpseCategory ? photosForCategory(glimpseCategory) : recentPhotos),
-    [glimpseCategory],
-  );
-
   const mediaLightboxPhotos: LightboxPhoto[] = useMemo(
     () =>
       mediaCoverage.map((m) => ({
@@ -116,12 +104,10 @@ export default function Home() {
     window.scrollTo({ top: 0, behavior: "auto" });
   };
 
-  const showGlimpsesFor = (cat: ServiceCategory) => {
-    setGlimpseCategory(cat);
-    requestAnimationFrame(() => {
-      const el = document.getElementById("glimpses");
-      if (el) el.scrollIntoView({ behavior: "smooth" });
-    });
+  const goToGalleryForCategory = (cat: ServiceCategory) => {
+    sessionStorage.setItem("bss-gallery-category", cat);
+    setLocation("/gallery");
+    window.scrollTo({ top: 0, behavior: "auto" });
   };
 
   return (
@@ -264,41 +250,33 @@ export default function Home() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {SERVICES.map((service, i) => {
-                const hasPhotos = photosForCategory(service.category).length > 0;
-                return (
-                  <motion.button
-                    key={service.titleKey}
-                    type="button"
-                    onClick={() => showGlimpsesFor(service.category)}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: i * 0.1 }}
-                    className="text-left h-full focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-                    aria-label={`${t(service.titleKey)} — view photos`}
-                  >
-                    <Card className="h-full rounded-none border-t-4 border-t-primary hover:shadow-xl transition-shadow bg-card hover:-translate-y-1 duration-300 cursor-pointer">
-                      <CardContent className="p-6 text-center">
-                        <div className="mx-auto w-16 h-16 bg-accent/20 rounded-full flex items-center justify-center mb-6 text-primary">
-                          <service.icon size={32} strokeWidth={1.5} />
-                        </div>
-                        <h4 className="font-bold text-lg mb-3 text-card-foreground">
-                          {t(service.titleKey)}
-                        </h4>
-                        <p className="text-sm text-muted-foreground leading-relaxed">
-                          {t(service.descKey)}
-                        </p>
-                        {hasPhotos && (
-                          <p className="mt-4 inline-flex items-center gap-1 text-xs font-bold uppercase tracking-wider text-primary">
-                            View photos <ArrowRight size={14} />
-                          </p>
-                        )}
-                      </CardContent>
-                    </Card>
-                  </motion.button>
-                );
-              })}
+              {SERVICES.map((service, i) => (
+                <motion.button
+                  key={service.titleKey}
+                  type="button"
+                  onClick={() => goToGalleryForCategory(service.category)}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: i * 0.1 }}
+                  className="text-left h-full focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                  aria-label={`${t(service.titleKey)} — view photos`}
+                >
+                  <Card className="h-full rounded-none border-t-4 border-t-primary hover:shadow-xl transition-shadow bg-card hover:-translate-y-1 duration-300 cursor-pointer">
+                    <CardContent className="p-6 text-center">
+                      <div className="mx-auto w-16 h-16 bg-accent/20 rounded-full flex items-center justify-center mb-6 text-primary">
+                        <service.icon size={32} strokeWidth={1.5} />
+                      </div>
+                      <h4 className="font-bold text-lg mb-3 text-card-foreground">
+                        {t(service.titleKey)}
+                      </h4>
+                      <p className="text-sm text-muted-foreground leading-relaxed">
+                        {t(service.descKey)}
+                      </p>
+                    </CardContent>
+                  </Card>
+                </motion.button>
+              ))}
             </div>
           </div>
         </section>
@@ -315,38 +293,10 @@ export default function Home() {
               <p className="mt-6 text-lg text-muted-foreground max-w-2xl mx-auto">
                 {t("glimpses.intro")}
               </p>
-              {glimpseCategory && (
-                <div className="mt-6 flex justify-center">
-                  <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-semibold">
-                    <span>
-                      Showing:{" "}
-                      {t(
-                        SERVICES.find((s) => s.category === glimpseCategory)
-                          ?.titleKey ?? "service.community.title",
-                      )}
-                    </span>
-                    <button
-                      type="button"
-                      onClick={() => setGlimpseCategory(null)}
-                      className="text-primary hover:text-primary/70 font-bold text-base leading-none"
-                      aria-label="Clear filter"
-                    >
-                      ×
-                    </button>
-                  </div>
-                </div>
-              )}
             </div>
 
-            {filteredGlimpses.length === 0 ? (
-              <div className="max-w-2xl mx-auto mb-10 text-center bg-muted border-2 border-dashed border-border p-10">
-                <p className="text-muted-foreground">
-                  No photos available for this category yet. Please check back soon.
-                </p>
-              </div>
-            ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 max-w-5xl mx-auto mb-10">
-              {filteredGlimpses.slice(0, 8).map((photo, i) => {
+              {recentPhotos.map((photo, i) => {
                 const eventTitle = localized(photo.eventTitle, lang);
                 const dateLabel = localized(photo.dateLabel, lang);
                 return (
@@ -378,7 +328,6 @@ export default function Home() {
                 );
               })}
             </div>
-            )}
 
             <div className="text-center">
               <Button
