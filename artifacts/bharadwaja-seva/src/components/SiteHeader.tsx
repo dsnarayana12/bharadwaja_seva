@@ -31,13 +31,13 @@ export function SiteHeader({ onNavigateHome }: SiteHeaderProps) {
       <div className="container mx-auto px-4 py-3 sm:py-4 flex items-center gap-3 sm:gap-4">
         <button
           onClick={() => onNavigateHome("home")}
-          className="flex-1 min-w-0 flex items-center justify-center gap-3 sm:gap-5 md:gap-6 text-left"
+          className="flex-1 min-w-0 flex items-center justify-center lg:justify-start gap-3 sm:gap-5 md:gap-6 text-left"
         >
           <div className="bg-white p-1.5 sm:p-2 rounded shrink-0">
             <img
               src={LOGO_SRC}
               alt={t("brand.name")}
-              className="h-14 sm:h-20 md:h-24 lg:h-28 w-auto object-contain"
+              className="h-14 sm:h-20 md:h-24 lg:h-36 xl:h-40 w-auto object-contain"
             />
           </div>
           <div className="min-w-0">
@@ -57,7 +57,7 @@ export function SiteHeader({ onNavigateHome }: SiteHeaderProps) {
       </div>
 
       {/* Bottom row: nav (lg+) + contribute button */}
-      <div className="hidden lg:block border-t border-white/10 bg-primary/95">
+      <div className="hidden lg:block bg-primary/95">
         <div className="container mx-auto px-4 py-3 flex items-center justify-center gap-6">
           <nav className="flex items-center gap-6 font-semibold text-sm">
             <button
