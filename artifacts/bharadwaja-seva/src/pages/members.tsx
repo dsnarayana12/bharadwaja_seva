@@ -73,8 +73,8 @@ export default function Members() {
         </section>
 
         <section className="py-16 md:py-20 bg-muted">
-          <div className="container mx-auto px-4 max-w-6xl">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div className="container mx-auto px-4 max-w-7xl">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
               {officeBearers.map((m, i) => (
                 <CommitteeCard key={`ob-${m.id}`} member={apiMemberToCommittee(m)} lang={lang} index={i} featured />
               ))}
