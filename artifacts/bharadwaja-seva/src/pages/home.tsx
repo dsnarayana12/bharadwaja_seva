@@ -430,23 +430,22 @@ export default function Home() {
               </p>
             </div>
 
-            <div className="max-w-5xl mx-auto space-y-5">
-              <div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-                  {officeBearers.map((m, i) => (
-                    <CommitteeCard key={m.name.en} member={m} lang={lang} index={i} featured />
-                  ))}
-                </div>
+            <div className="max-w-5xl mx-auto">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                {officeBearers.map((m, i) => (
+                  <CommitteeCard key={m.name.en} member={m} lang={lang} index={i} featured />
+                ))}
+                {executiveBody.map((m, i) => (
+                  <CommitteeCard
+                    key={m.name.en}
+                    member={m}
+                    lang={lang}
+                    index={officeBearers.length + i}
+                  />
+                ))}
               </div>
 
-              <div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-                  {executiveBody.map((m, i) => (
-                    <CommitteeCard key={m.name.en} member={m} lang={lang} index={i} />
-                  ))}
-                </div>
-
-                <div className="mt-12 flex justify-center">
+              <div className="mt-12 flex justify-center">
                   <Button
                     onClick={() => {
                       window.scrollTo({ top: 0, behavior: "auto" });
@@ -455,8 +454,7 @@ export default function Home() {
                     className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-none uppercase font-bold tracking-wider px-8 py-6 text-base shadow-md"
                   >
                     {t("committee.ourMembersBtn")}
-                  </Button>
-                </div>
+                </Button>
               </div>
             </div>
           </div>
