@@ -230,7 +230,7 @@ export default function Home() {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6 }}
-                className="relative h-full min-h-[16rem]"
+                className="relative h-full min-h-[32rem]"
               >
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="relative h-full">
