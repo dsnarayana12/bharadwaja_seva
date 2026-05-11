@@ -4,9 +4,7 @@ import { LanguageToggle } from "@/components/LanguageToggle";
 import { MobileMenu } from "@/components/MobileMenu";
 import { useContributeDialog } from "@/components/ContributeDialog";
 import { useLanguage } from "@/i18n/LanguageProvider";
-
-const LOGO_SRC =
-  "https://img1.wsimg.com/isteam/ip/210338f7-f5fb-4633-b166-d0068dd8981c/baradwaja%20logo.jpg/:/rs=h:200,cg:true,m/qt=q:95";
+import LOGO_SRC from "@/assets/logo.png";
 
 interface SiteHeaderProps {
   onNavigateHome: (sectionId: string) => void;
@@ -28,23 +26,23 @@ export function SiteHeader({ onNavigateHome }: SiteHeaderProps) {
   return (
     <header className="relative w-full shadow-md bg-primary text-primary-foreground border-b-4 border-accent">
       {/* Top row: centered logo + brand, with controls on the right */}
-      <div className="container mx-auto px-4 py-3 sm:py-4 flex items-center gap-3 sm:gap-4">
+      <div className="container mx-auto px-4 py-2 sm:py-3 lg:py-0 flex items-center gap-3 sm:gap-4">
         <button
           onClick={() => onNavigateHome("home")}
           className="flex-1 min-w-0 flex items-center justify-center lg:justify-start gap-3 sm:gap-5 md:gap-6 text-left"
         >
-          <div className="bg-white p-1.5 sm:p-2 rounded shrink-0">
+          <div className="shrink-0 lg:py-2">
             <img
               src={LOGO_SRC}
               alt={t("brand.name")}
-              className="h-14 sm:h-20 md:h-24 lg:h-36 xl:h-40 w-auto object-contain"
+              className="h-16 sm:h-20 md:h-24 lg:h-44 xl:h-52 w-auto object-contain"
             />
           </div>
           <div className="min-w-0">
-            <h1 className="font-serif font-bold text-base sm:text-xl md:text-2xl lg:text-4xl leading-tight tracking-wide uppercase">
+            <h1 className="font-serif font-bold text-base sm:text-xl md:text-2xl lg:text-5xl xl:text-6xl leading-tight tracking-wide uppercase">
               {t("brand.name")}
             </h1>
-            <p className="text-[10px] sm:text-xs md:text-sm text-accent font-semibold tracking-wider mt-1 uppercase">
+            <p className="text-[10px] sm:text-xs md:text-sm lg:text-base text-accent font-semibold tracking-wider mt-1 uppercase">
               Regd.No.350/2024
             </p>
           </div>
