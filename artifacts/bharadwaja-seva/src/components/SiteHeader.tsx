@@ -39,7 +39,7 @@ export function SiteHeader({ onNavigateHome }: SiteHeaderProps) {
             />
           </div>
           <div className="min-w-0">
-            <h1 className="font-serif font-bold text-base sm:text-xl md:text-2xl lg:text-5xl xl:text-6xl leading-tight tracking-wide uppercase">
+            <h1 className="font-serif font-bold text-base sm:text-xl md:text-2xl lg:text-4xl xl:text-5xl leading-tight tracking-wide uppercase lg:whitespace-nowrap">
               {t("brand.name")}
             </h1>
             <p className="text-[10px] sm:text-xs md:text-sm lg:text-base text-accent font-semibold tracking-wider mt-1 uppercase">
