@@ -25,6 +25,10 @@ export function SiteHeader({ onNavigateHome }: SiteHeaderProps) {
 
   return (
     <header className="relative w-full shadow-md bg-primary text-primary-foreground border-b-4 border-accent">
+      {/* Desktop-only: language toggle vertically centered on the right edge */}
+      <div className="hidden lg:flex absolute right-4 top-1/2 -translate-y-1/2 z-20">
+        <LanguageToggle />
+      </div>
       {/* Top row: logo + brand (left on lg+), with controls on the right */}
       <div className="container mx-auto px-4 py-2 sm:py-3 lg:pt-4 lg:pb-0 flex items-center gap-3 sm:gap-4">
         <button
@@ -49,7 +53,9 @@ export function SiteHeader({ onNavigateHome }: SiteHeaderProps) {
         </button>
 
         <div className="shrink-0 flex items-center gap-2 sm:gap-3">
-          <LanguageToggle />
+          <div className="lg:hidden">
+            <LanguageToggle />
+          </div>
           <MobileMenu onNavigateHome={onNavigateHome} />
         </div>
       </div>
