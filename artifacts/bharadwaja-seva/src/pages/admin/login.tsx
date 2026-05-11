@@ -10,19 +10,20 @@ import { Label } from "@/components/ui/label";
 export default function AdminLogin() {
   const [, setLocation] = useLocation();
   const qc = useQueryClient();
-  const { data: me } = useAdminMe({
+  const { data: me, isFetching, isError } = useAdminMe({
     query: { retry: false, queryKey: ["adminMe"] },
   });
+  const isAuthed = !isFetching && !isError && !!me;
   const { mutateAsync, isPending } = useAdminLogin();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (me) setLocation("/admin");
-  }, [me, setLocation]);
+    if (isAuthed) setLocation("/admin");
+  }, [isAuthed, setLocation]);
 
-  if (me) return null;
+  if (isAuthed) return null;
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();

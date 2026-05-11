@@ -76,7 +76,8 @@ export default function AdminDashboard() {
 
   async function onLogout() {
     await logout();
-    await qc.invalidateQueries();
+    qc.removeQueries({ queryKey: ["adminMe"] });
+    qc.clear();
     setLocation("/admin/login");
   }
 
