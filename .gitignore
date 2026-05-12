@@ -53,6 +53,7 @@ Thumbs.db
 .env.*
 !.env.example
 
-# Generated Vercel serverless bundle (output of api-server build)
-/api/
+# NOTE: /api/ is intentionally NOT ignored — Vercel must see api/serverless.mjs
+# in the repo to recognize it as a serverless function. The api-server build
+# script regenerates the bundle on every build.
 
