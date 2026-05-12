@@ -1,13 +1,17 @@
-import { Router, type IRouter, type Request, type Response } from "express";
+import { Router, type IRouter, type Request, type Response, type NextFunction } from "express";
 import { eq } from "drizzle-orm";
-import multer from "multer";
+import multer, { MulterError } from "multer";
 import { randomUUID, createHash } from "crypto";
 import { db, photosTable } from "@workspace/db";
 import { requireAdmin } from "../lib/auth";
 
 const router: IRouter = Router();
 
-const MAX_BYTES = 10 * 1024 * 1024;
+// 4.5 MB — kept under Vercel's serverless request body limit so the same code
+// works both on Replit and on Vercel without surprises.
+const MAX_BYTES = 4_718_592;
+const MAX_MB_LABEL = "4.5 MB";
+
 const ALLOWED_MIME = new Set([
   "image/jpeg",
   "image/png",
@@ -18,8 +22,31 @@ const ALLOWED_MIME = new Set([
 
 const upload = multer({
   storage: multer.memoryStorage(),
-  limits: { fileSize: MAX_BYTES, files: 20 },
+  limits: { fileSize: MAX_BYTES, files: 5 },
 });
+
+function handleMulterError(
+  err: unknown,
+  _req: Request,
+  res: Response,
+  next: NextFunction,
+): void {
+  if (err instanceof MulterError) {
+    if (err.code === "LIMIT_FILE_SIZE") {
+      res.status(413).json({
+        error: `File too large. Maximum allowed size is ${MAX_MB_LABEL} per image.`,
+      });
+      return;
+    }
+    if (err.code === "LIMIT_FILE_COUNT") {
+      res.status(400).json({ error: "Too many files in a single upload (max 5)." });
+      return;
+    }
+    res.status(400).json({ error: `Upload error: ${err.message}` });
+    return;
+  }
+  next(err);
+}
 
 /**
  * POST /storage/uploads
@@ -33,7 +60,7 @@ const upload = multer({
 router.post(
   "/storage/uploads",
   requireAdmin,
-  upload.any(),
+  (req, res, next) => upload.any()(req, res, (err) => handleMulterError(err, req, res, next)),
   async (req: Request, res: Response): Promise<void> => {
     try {
       const files = (req.files as Express.Multer.File[] | undefined) ?? [];
