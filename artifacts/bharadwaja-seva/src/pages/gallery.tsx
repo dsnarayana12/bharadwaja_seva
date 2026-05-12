@@ -23,19 +23,20 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { WhatsAppFAB } from "@/components/WhatsAppFAB";
 import { useLanguage } from "@/i18n/LanguageProvider";
+import type { TranslationKey } from "@/i18n/translations";
 
 type CategoryKey = ServiceCategory | "other";
 
-const CATEGORY_LABEL: Record<CategoryKey, string> = {
-  feeding: "Feeding the Needy",
-  education: "Supporting Education",
-  medical: "Medical Relief",
-  youth: "Youth Empowerment",
-  elderly: "Care for the Elderly",
-  women: "Women & Children",
-  environment: "Environmental Protection",
-  community: "Community Service",
-  other: "Other",
+const CATEGORY_I18N_KEY: Record<CategoryKey, string> = {
+  feeding: "service.feeding.title",
+  education: "service.education.title",
+  medical: "service.medical.title",
+  youth: "service.youth.title",
+  elderly: "service.elderly.title",
+  women: "service.women.title",
+  environment: "service.environment.title",
+  community: "service.community.title",
+  other: "gallery.filter.other",
 };
 
 const CATEGORY_ICON: Record<CategoryKey, typeof Utensils> = {
@@ -50,7 +51,7 @@ const CATEGORY_ICON: Record<CategoryKey, typeof Utensils> = {
   other: MoreHorizontal,
 };
 
-const CATEGORY_KEYS = Object.keys(CATEGORY_LABEL) as CategoryKey[];
+const CATEGORY_KEYS = Object.keys(CATEGORY_I18N_KEY) as CategoryKey[];
 
 function toCategoryKey(raw: string): CategoryKey {
   return (CATEGORY_KEYS as string[]).includes(raw) ? (raw as CategoryKey) : "other";
@@ -196,9 +197,9 @@ export default function Gallery() {
               {/* Stats strip */}
               <div className="mt-10 grid grid-cols-3 gap-4 max-w-2xl mx-auto">
                 {[
-                  { value: stats.events, label: "Events" },
-                  { value: stats.photos, label: "Photos" },
-                  { value: stats.years, label: "Years" },
+                  { value: stats.events, label: t("gallery.stats.events") },
+                  { value: stats.photos, label: t("gallery.stats.photos") },
+                  { value: stats.years, label: t("gallery.stats.years") },
                 ].map((s) => (
                   <div
                     key={s.label}
@@ -217,7 +218,7 @@ export default function Gallery() {
               {category && (
                 <div className="mt-6 flex justify-center">
                   <div className="inline-flex items-center gap-2 bg-white/15 backdrop-blur-sm px-4 py-2 rounded-full text-sm font-semibold text-white">
-                    <span>Showing: {CATEGORY_LABEL[category]}</span>
+                    <span>{t("gallery.showing")}: {t(CATEGORY_I18N_KEY[category] as TranslationKey)}</span>
                     <button
                       type="button"
                       onClick={() => setCategory(null)}
@@ -254,7 +255,7 @@ export default function Gallery() {
                     : "bg-card text-foreground border-border hover:border-primary hover:text-primary"
                 }`}
               >
-                All
+                {t("gallery.filter.all")}
                 <span
                   className={`text-xs px-1.5 py-0.5 rounded-full ${
                     category === null
@@ -268,6 +269,7 @@ export default function Gallery() {
               {visibleCategories.map((key) => {
                 const Icon = CATEGORY_ICON[key];
                 const isActive = category === key;
+                const label = t(CATEGORY_I18N_KEY[key] as TranslationKey);
                 return (
                   <button
                     key={key}
@@ -281,8 +283,8 @@ export default function Gallery() {
                     }`}
                   >
                     <Icon className="w-4 h-4" />
-                    <span className="hidden sm:inline">{CATEGORY_LABEL[key]}</span>
-                    <span className="sm:hidden">{CATEGORY_LABEL[key].split(" ")[0]}</span>
+                    <span className="hidden sm:inline">{label}</span>
+                    <span className="sm:hidden">{label.split(" ")[0]}</span>
                     <span
                       className={`text-xs px-1.5 py-0.5 rounded-full ${
                         isActive
@@ -306,14 +308,14 @@ export default function Gallery() {
               <div className="text-center bg-muted border-2 border-dashed border-border p-10 rounded-lg">
                 <Camera className="w-10 h-10 text-muted-foreground mx-auto mb-3" />
                 <p className="text-muted-foreground mb-4">
-                  No events found for this category yet. Please check back soon.
+                  {t("gallery.empty")}
                 </p>
                 <button
                   type="button"
                   onClick={() => setCategory(null)}
                   className="text-primary font-bold uppercase tracking-wider text-sm hover:underline"
                 >
-                  Show all events
+                  {t("gallery.showAll")}
                 </button>
               </div>
             )}
@@ -355,15 +357,18 @@ export default function Gallery() {
                                   type="button"
                                   onClick={() => setCategory(rawCategory)}
                                   className="inline-flex items-center gap-1.5 text-xs uppercase tracking-widest font-bold bg-secondary/15 hover:bg-secondary/25 text-secondary-foreground/80 px-2.5 py-1 rounded-full border border-secondary/30 transition-colors cursor-pointer"
-                                  title={`Filter by ${CATEGORY_LABEL[rawCategory]}`}
+                                  title={t(CATEGORY_I18N_KEY[rawCategory] as TranslationKey)}
                                 >
                                   <Icon className="w-3 h-3" />
-                                  {CATEGORY_LABEL[rawCategory]}
+                                  {t(CATEGORY_I18N_KEY[rawCategory] as TranslationKey)}
                                 </button>
                                 {hasPhotos && (
                                   <span className="inline-flex items-center gap-1.5 text-xs uppercase tracking-widest font-bold bg-accent/15 text-accent-foreground/80 px-2.5 py-1 rounded-full border border-accent/30">
                                     <Camera className="w-3 h-3" />
-                                    {event.photos.length} {event.photos.length === 1 ? "Photo" : "Photos"}
+                                    {event.photos.length}{" "}
+                                    {event.photos.length === 1
+                                      ? t("gallery.photoCount.one")
+                                      : t("gallery.photoCount.many")}
                                   </span>
                                 )}
                               </div>
@@ -409,7 +414,7 @@ export default function Gallery() {
                           <div className="px-6 md:px-7 py-5 bg-muted/40 flex items-center gap-3 text-muted-foreground">
                             <ImageIcon className="w-5 h-5 shrink-0" />
                             <span className="text-sm italic">
-                              Photos for this event will be added soon.
+                              {t("gallery.noPhotos")}
                             </span>
                           </div>
                         )}
