@@ -3,19 +3,23 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { build as esbuild } from "esbuild";
 import esbuildPluginPino from "esbuild-plugin-pino";
-import { rm } from "node:fs/promises";
+import { rm, mkdir, cp } from "node:fs/promises";
 
 // Plugins (e.g. 'esbuild-plugin-pino') may use `require` to resolve dependencies
 globalThis.require = createRequire(import.meta.url);
 
 const artifactDir = path.dirname(fileURLToPath(import.meta.url));
+const repoRoot = path.resolve(artifactDir, "..", "..");
 
 async function buildAll() {
   const distDir = path.resolve(artifactDir, "dist");
   await rm(distDir, { recursive: true, force: true });
 
   await esbuild({
-    entryPoints: [path.resolve(artifactDir, "src/index.ts")],
+    entryPoints: [
+      path.resolve(artifactDir, "src/index.ts"),
+      path.resolve(artifactDir, "src/serverless.ts"),
+    ],
     platform: "node",
     bundle: true,
     format: "esm",
@@ -120,7 +124,40 @@ globalThis.__dirname = __bannerPath.dirname(globalThis.__filename);
   });
 }
 
-buildAll().catch((err) => {
-  console.error(err);
-  process.exit(1);
-});
+async function copyToVercelApiDir() {
+  // Copy ONLY the serverless bundle plus its sibling pino-worker /
+  // thread-stream-worker helper files into /api at the repo root. We
+  // intentionally do NOT copy index.mjs — it calls `app.listen()` and would
+  // otherwise be auto-detected by Vercel as a stray serverless function.
+  const apiDir = path.resolve(repoRoot, "api");
+  await rm(apiDir, { recursive: true, force: true });
+  await mkdir(apiDir, { recursive: true });
+  const distDir = path.resolve(artifactDir, "dist");
+  const filesToCopy = [
+    "serverless.mjs",
+    "serverless.mjs.map",
+    "pino-worker.mjs",
+    "pino-worker.mjs.map",
+    "pino-file.mjs",
+    "pino-file.mjs.map",
+    "pino-pretty.mjs",
+    "pino-pretty.mjs.map",
+    "thread-stream-worker.mjs",
+    "thread-stream-worker.mjs.map",
+  ];
+  for (const f of filesToCopy) {
+    try {
+      await cp(path.join(distDir, f), path.join(apiDir, f));
+    } catch (err) {
+      if (err?.code !== "ENOENT") throw err;
+    }
+  }
+  console.log(`Copied serverless bundle → ${apiDir}/`);
+}
+
+buildAll()
+  .then(copyToVercelApiDir)
+  .catch((err) => {
+    console.error(err);
+    process.exit(1);
+  });

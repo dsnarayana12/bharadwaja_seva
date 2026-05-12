@@ -52,3 +52,7 @@ Thumbs.db
 .env
 .env.*
 !.env.example
+
+# Generated Vercel serverless bundle (output of api-server build)
+/api/
+
