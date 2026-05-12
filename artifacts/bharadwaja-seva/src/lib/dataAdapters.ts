@@ -32,10 +32,11 @@ function dateLabelFromIso(iso: string): LocalizedString {
   if (!m) return { en: iso, te: iso, hi: iso };
   const monthIdx = Math.max(0, Math.min(11, parseInt(m[2], 10) - 1));
   const year = m[1];
+  const day = String(parseInt(m[3], 10));
   return {
-    en: `${MONTHS_EN[monthIdx]} ${year}`,
-    te: `${MONTHS_TE[monthIdx]} ${year}`,
-    hi: `${MONTHS_HI[monthIdx]} ${year}`,
+    en: `${MONTHS_EN[monthIdx]} ${day}, ${year}`,
+    te: `${day} ${MONTHS_TE[monthIdx]} ${year}`,
+    hi: `${day} ${MONTHS_HI[monthIdx]} ${year}`,
   };
 }
 
