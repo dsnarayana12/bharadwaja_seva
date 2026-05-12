@@ -1,132 +1,151 @@
 import { Router, type IRouter, type Request, type Response } from "express";
-import { Readable } from "stream";
-import {
-  RequestUploadUrlBody,
-  RequestUploadUrlResponse,
-} from "@workspace/api-zod";
-import { ObjectStorageService, ObjectNotFoundError } from "../lib/objectStorage";
-import { ObjectPermission } from "../lib/objectAcl";
+import { eq } from "drizzle-orm";
+import multer from "multer";
+import { randomUUID, createHash } from "crypto";
+import { db, photosTable } from "@workspace/db";
 import { requireAdmin } from "../lib/auth";
 
 const router: IRouter = Router();
-const objectStorageService = new ObjectStorageService();
 
-/**
- * POST /storage/uploads/request-url
- *
- * Request a presigned URL for file upload.
- * The client sends JSON metadata (name, size, contentType) — NOT the file.
- * Then uploads the file directly to the returned presigned URL.
- */
-router.post("/storage/uploads/request-url", requireAdmin, async (req: Request, res: Response) => {
-  const parsed = RequestUploadUrlBody.safeParse(req.body);
-  if (!parsed.success) {
-    res.status(400).json({ error: "Missing or invalid required fields" });
-    return;
-  }
+const MAX_BYTES = 10 * 1024 * 1024;
+const ALLOWED_MIME = new Set([
+  "image/jpeg",
+  "image/png",
+  "image/webp",
+  "image/gif",
+  "image/avif",
+]);
 
-  try {
-    const { name, size, contentType } = parsed.data;
-
-    const uploadURL = await objectStorageService.getObjectEntityUploadURL();
-    const objectPath = objectStorageService.normalizeObjectEntityPath(uploadURL);
-
-    res.json(
-      RequestUploadUrlResponse.parse({
-        uploadURL,
-        objectPath,
-        metadata: { name, size, contentType },
-      }),
-    );
-  } catch (error) {
-    req.log.error({ err: error }, "Error generating upload URL");
-    res.status(500).json({ error: "Failed to generate upload URL" });
-  }
+const upload = multer({
+  storage: multer.memoryStorage(),
+  limits: { fileSize: MAX_BYTES, files: 20 },
 });
 
 /**
- * GET /storage/public-objects/*
+ * POST /storage/uploads
  *
- * Serve public assets from PUBLIC_OBJECT_SEARCH_PATHS.
- * These are unconditionally public — no authentication or ACL checks.
- * IMPORTANT: Always provide this endpoint when object storage is set up.
+ * Admin-only. Accepts multipart/form-data with one or more files under field
+ * name "files" (or a single file under "file"). Stores raw bytes in Postgres
+ * and returns the public URL(s) for each uploaded file.
+ *
+ * Response: { urls: string[] }
  */
-router.get("/storage/public-objects/*filePath", async (req: Request, res: Response) => {
+router.post(
+  "/storage/uploads",
+  requireAdmin,
+  upload.any(),
+  async (req: Request, res: Response): Promise<void> => {
+    try {
+      const files = (req.files as Express.Multer.File[] | undefined) ?? [];
+      if (files.length === 0) {
+        res.status(400).json({ error: "No files uploaded" });
+        return;
+      }
+
+      const urls: string[] = [];
+      for (const f of files) {
+        const mime = (f.mimetype || "application/octet-stream").toLowerCase();
+        if (!ALLOWED_MIME.has(mime)) {
+          res.status(400).json({ error: `Unsupported file type: ${mime}` });
+          return;
+        }
+        const id = randomUUID();
+        await db.insert(photosTable).values({
+          id,
+          mimeType: mime,
+          byteSize: f.size,
+          bytes: f.buffer,
+        });
+        urls.push(`/api/storage/photos/${id}`);
+      }
+
+      res.status(201).json({ urls });
+    } catch (error) {
+      req.log.error({ err: error }, "Error uploading file");
+      res.status(500).json({ error: "Failed to upload file" });
+    }
+  },
+);
+
+/**
+ * GET /storage/photos/:id
+ *
+ * Public. Streams the photo bytes stored in Postgres with proper Content-Type,
+ * long-lived cache headers, and ETag support.
+ */
+router.get("/storage/photos/:id", async (req: Request, res: Response): Promise<void> => {
   try {
-    const raw = req.params.filePath;
-    const filePath = Array.isArray(raw) ? raw.join("/") : raw;
-    const file = await objectStorageService.searchPublicObject(filePath);
-    if (!file) {
-      res.status(404).json({ error: "File not found" });
+    const idParam = req.params.id;
+    const id = Array.isArray(idParam) ? idParam[0] : idParam;
+    if (!id || id.length > 64) {
+      res.status(400).json({ error: "Invalid id" });
       return;
     }
 
-    const response = await objectStorageService.downloadObject(file);
+    const [row] = await db
+      .select()
+      .from(photosTable)
+      .where(eq(photosTable.id, id))
+      .limit(1);
 
-    res.status(response.status);
-    response.headers.forEach((value, key) => res.setHeader(key, value));
-
-    if (response.body) {
-      const nodeStream = Readable.fromWeb(response.body as ReadableStream<Uint8Array>);
-      nodeStream.pipe(res);
-    } else {
-      res.end();
+    if (!row) {
+      res.status(404).json({ error: "Photo not found" });
+      return;
     }
+
+    // Photos are immutable, so a stable hash of identity+size is enough.
+    // Avoids hashing the full image buffer on every request.
+    const etag = `"${createHash("sha1")
+      .update(`${row.id}:${row.byteSize}:${row.createdAt.toISOString()}`)
+      .digest("hex")}"`;
+    if (req.headers["if-none-match"] === etag) {
+      res.status(304).end();
+      return;
+    }
+
+    res.setHeader("Content-Type", row.mimeType);
+    res.setHeader("Content-Length", String(row.byteSize));
+    res.setHeader("Cache-Control", "public, max-age=31536000, immutable");
+    res.setHeader("ETag", etag);
+    res.status(200).end(row.bytes);
   } catch (error) {
-    req.log.error({ err: error }, "Error serving public object");
-    res.status(500).json({ error: "Failed to serve public object" });
+    req.log.error({ err: error }, "Error serving photo");
+    res.status(500).json({ error: "Failed to serve photo" });
   }
 });
 
 /**
- * GET /storage/objects/*
+ * DELETE /storage/photos/:id
  *
- * Serve object entities from PRIVATE_OBJECT_DIR.
- * These are served from a separate path from /public-objects and can optionally
- * be protected with authentication or ACL checks based on the use case.
+ * Admin-only. Deletes a photo from the DB. Note: this does NOT remove
+ * references from gallery_events.photo_urls — admins should clean those up
+ * via the event editor.
  */
-router.get("/storage/objects/*path", async (req: Request, res: Response) => {
-  try {
-    const raw = req.params.path;
-    const wildcardPath = Array.isArray(raw) ? raw.join("/") : raw;
-    const objectPath = `/objects/${wildcardPath}`;
-    const objectFile = await objectStorageService.getObjectEntityFile(objectPath);
-
-    // --- Protected route example (uncomment when using replit-auth) ---
-    // if (!req.isAuthenticated()) {
-    //   res.status(401).json({ error: "Unauthorized" });
-    //   return;
-    // }
-    // const canAccess = await objectStorageService.canAccessObjectEntity({
-    //   userId: req.user.id,
-    //   objectFile,
-    //   requestedPermission: ObjectPermission.READ,
-    // });
-    // if (!canAccess) {
-    //   res.status(403).json({ error: "Forbidden" });
-    //   return;
-    // }
-
-    const response = await objectStorageService.downloadObject(objectFile);
-
-    res.status(response.status);
-    response.headers.forEach((value, key) => res.setHeader(key, value));
-
-    if (response.body) {
-      const nodeStream = Readable.fromWeb(response.body as ReadableStream<Uint8Array>);
-      nodeStream.pipe(res);
-    } else {
-      res.end();
+router.delete(
+  "/storage/photos/:id",
+  requireAdmin,
+  async (req: Request, res: Response): Promise<void> => {
+    try {
+      const idParam = req.params.id;
+      const id = Array.isArray(idParam) ? idParam[0] : idParam;
+      if (!id) {
+        res.status(400).json({ error: "Invalid id" });
+        return;
+      }
+      const result = await db
+        .delete(photosTable)
+        .where(eq(photosTable.id, id))
+        .returning({ id: photosTable.id });
+      if (result.length === 0) {
+        res.status(404).json({ error: "Photo not found" });
+        return;
+      }
+      res.sendStatus(204);
+    } catch (error) {
+      req.log.error({ err: error }, "Error deleting photo");
+      res.status(500).json({ error: "Failed to delete photo" });
     }
-  } catch (error) {
-    if (error instanceof ObjectNotFoundError) {
-      req.log.warn({ err: error }, "Object not found");
-      res.status(404).json({ error: "Object not found" });
-      return;
-    }
-    req.log.error({ err: error }, "Error serving object");
-    res.status(500).json({ error: "Failed to serve object" });
-  }
-});
+  },
+);
 
 export default router;

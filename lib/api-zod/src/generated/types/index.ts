@@ -16,5 +16,3 @@ export * from "./galleryEvent";
 export * from "./galleryEventInput";
 export * from "./galleryEventUpdate";
 export * from "./healthStatus";
-export * from "./uploadUrlRequest";
-export * from "./uploadUrlResponse";
